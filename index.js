@@ -19,10 +19,16 @@ let answerScreen = document.querySelector("#answer-screen p");
 
 
 function typesNumber() {
+    if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer === -Infinity) {
+        return;
+    }
+
+
+
+
     // User stops the operation chain by typing new set of operands
     if (lastInput === "equals") {
         chain = false;
-        console.log(answer);
         firstInput = undefined;
         secondInput = undefined;
         inputScreen.textContent = "";
@@ -46,7 +52,7 @@ function typesNumber() {
 let operatorButton = document.querySelectorAll("[data-operate]");
 operatorButton.forEach(button => {
     button.addEventListener("click", operatesInputs);
-})
+});
 
 
 
@@ -54,6 +60,14 @@ let step = 1;
 function operatesInputs() {
     let operation = this.dataset.operate;
     console.log(lastInput);
+
+if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer === -Infinity) {
+    return;
+}
+
+
+
+
 
 // Saves the last operation for operation function to work
     if(operation != "equals") {
@@ -129,6 +143,8 @@ function operatesInputs() {
                 step = 2;
                 return;
 
+                
+
             } else if (inputNumbers.length === 0) {
             // Operator was pressed before any number, makes
             // first input as ZERO, then continue steps
@@ -154,6 +170,13 @@ function operatesInputs() {
         // instead of pressing equals
             secondInput = parseFloat(inputNumbers.join(""));
             runOperation(currentOperation);
+
+            // Posts Math ERROR and end function
+            if (answer === Infinity || answer === -Infinity) {
+                answerScreen.textContent = "Math ERROR";
+                return;
+            }
+
             inputScreen.textContent = answer;
             inputScreen.textContent += this.textContent;
             firstInput = answer;
@@ -168,6 +191,12 @@ function operatesInputs() {
             secondInput = parseFloat(inputNumbers.join(""));
             runOperation(currentOperation);
             postAnswer(answer);
+
+            // Ends function on Math Error
+            if (answer === Infinity || answer === -Infinity) {
+                return;
+            }
+
             // Storing answer as first input enables chaining another
             //   operation if next button press is another operator
             // The first input is vacated after this operation if a
@@ -237,6 +266,11 @@ function postAnswer(number) {
         let result = number.toFixed(16 - wholeNumbers); //this is string
         answerScreen.textContent = result;
     } else {
-        answerScreen.textContent = answer;
+        if (number === Infinity || number === -Infinity) {
+            answerScreen.textContent = "Math ERROR";
+        } else {
+            answerScreen.textContent = answer;
+        }
+        
     }
 }
