@@ -6,12 +6,18 @@ let lastInput; //stores the last input on screen wether a digit or operator
 let lastOperation = []; // Stores the last operator executed, except equals
 let inputNumbers = []; //stores DIGITS in an array, later used to be combined as a float/ number
 let currentOperation;
+
+
 let numberButtons = document.querySelectorAll("#number-buttons button");
-numberButtons.forEach(button => {
-    button.addEventListener("click", typesNumber);
-})
+    numberButtons.forEach(button => {
+        button.addEventListener("click", typesNumber);
+    })
 
+let allClearButton = document.querySelector("[data-action='all-clear']");
+    allClearButton.addEventListener("click", allClear);
 
+let deleteButton = document.querySelector("[data-action='delete']");
+    deleteButton.addEventListener("click", backSpace);
 
 let inputScreen = document.querySelector("#input-screen p");
 let answerScreen = document.querySelector("#answer-screen p");
@@ -19,12 +25,10 @@ let answerScreen = document.querySelector("#answer-screen p");
 
 
 function typesNumber() {
-    if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer === -Infinity) {
-        return;
+    // resets calculator after pressing a number upon Math ERROR
+    if (answerScreen.textContent === "Math ERROR") {
+        allClear();
     }
-
-
-
 
     // User stops the operation chain by typing new set of operands
     if (lastInput === "equals") {
@@ -41,12 +45,8 @@ function typesNumber() {
     lastInput = parseFloat(this.value); //determines that the last input is a number and not an operator
     inputNumbers.push(this.value);
     inputScreen.textContent += this.value;
-    console.log(lastInput);
+    // console.log(lastInput);
 }
-
-
-
-
 
 
 let operatorButton = document.querySelectorAll("[data-operate]");
@@ -59,14 +59,11 @@ operatorButton.forEach(button => {
 let step = 1;
 function operatesInputs() {
     let operation = this.dataset.operate;
-    console.log(lastInput);
+    // console.log(lastInput);
 
-if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer === -Infinity) {
-    return;
-}
-
-
-
+    if (answerScreen.textContent === "Math ERROR") {
+        return;
+    }
 
 
 // Saves the last operation for operation function to work
@@ -97,7 +94,7 @@ if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer =
         }
     }
 
-    console.log(currentOperation);
+    // console.log(currentOperation);
 
 // Don't run equals if no number is printed first
     if (inputScreen.textContent.length === 0 && operation === "equals") {
@@ -150,7 +147,7 @@ if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer =
             // first input as ZERO, then continue steps
                 firstInput = 0;
                 inputScreen.textContent += firstInput;
-                console.log(firstInput);
+                // console.log(firstInput);
                 
             } else {
             // Stores first input and continue step
@@ -172,7 +169,7 @@ if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer =
             runOperation(currentOperation);
 
             // Posts Math ERROR and end function
-            if (answer === Infinity || answer === -Infinity) {
+            if (answer === Infinity || answer === -Infinity || answer.toString() === "NaN") {
                 answerScreen.textContent = "Math ERROR";
                 return;
             }
@@ -193,7 +190,7 @@ if (answerScreen.textContent === "Math ERROR" || answer === Infinity || answer =
             postAnswer(answer);
 
             // Ends function on Math Error
-            if (answer === Infinity || answer === -Infinity) {
+            if (answer === Infinity || answer === -Infinity || answer.toString() === "NaN") {
                 return;
             }
 
@@ -266,11 +263,73 @@ function postAnswer(number) {
         let result = number.toFixed(16 - wholeNumbers); //this is string
         answerScreen.textContent = result;
     } else {
-        if (number === Infinity || number === -Infinity) {
+        if (number === Infinity || number === -Infinity || number.toString() === "NaN" ) {
             answerScreen.textContent = "Math ERROR";
         } else {
             answerScreen.textContent = answer;
         }
         
+    }
+}
+
+
+function allClear() {
+    chain = false;
+    firstInput = undefined;
+    secondInput = undefined;
+    answer = undefined;
+    lastInput = undefined;
+    lastOperation = [];
+    currentOperation = undefined;
+    inputScreen.textContent = "";
+    answerScreen.textContent = "";
+    step = 1;
+    inputNumbers = [];
+}
+
+function backSpace() {
+    let inputScreenText = inputScreen.textContent;
+    let lastChar = inputScreenText.slice(inputScreenText.length - 1);
+
+// Does not work if the answer screen is not yet cleared
+        if (answerScreen.textContent.length != 0) {
+            return;
+        }
+
+// deletes character on screen
+    inputScreen.textContent = inputScreenText.slice(0, inputScreen.textContent.length - 1);
+
+// detect if the last character deleted is a number
+    if (typeof parseFloat(lastChar) === "number") {
+        inputNumbers.pop();
+    }
+
+
+// detect if the last character deleted is an operator and reset user input to step 1
+    if (parseFloat(lastChar).toString() === "NaN") {
+        chain = false;
+        lastOperation = [];
+        currentOperation = undefined;
+        firstInput = undefined;
+        step = 1;
+        inputNumbers = [...inputScreen.textContent];
+    }
+
+// Emulates last inputs upon deletion of characters
+    if (parseFloat(inputScreen.textContent[inputScreen.textContent.length - 1]).toString() === "NaN") {
+        // If last character on screen is an operator
+        let inputScreenTextLastChar = inputScreen.textContent[inputScreen.textContent.length - 1];
+        
+        if (inputScreenTextLastChar === "+") {
+            lastInput = "add";
+        } else if (inputScreenTextLastChar === "−") {
+            lastInput = "subtract";
+        } else if (inputScreenTextLastChar === "×") {
+            lastInput = "multiply"; 
+        } else if (inputScreenTextLastChar === "÷") {
+            lastInput = "divide"; 
+        }
+    } else {
+        lastInput = parseFloat(inputScreen.textContent[inputScreen.textContent.length - 1]);
     }
 }
