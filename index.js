@@ -49,75 +49,80 @@ let step = 1;
 function operatesInputs() {
     let operation = this.dataset.operate;
 
-    //saves the last operation for operation function to work
+    // Saves the last operation for operation function to work
     if(operation != "equals") {
         lastOperation = operation;
     }
 
     console.log(lastOperation);
-    // don't run equals if no number is printed first
-    if (inputScreen.textContent.length === 0 && this.dataset.operate === "equals") {
+    // Don't run equals if no number is printed first
+    if (inputScreen.textContent.length === 0 && operation === "equals") {
         return;
     }
 
     if (typeof lastInput != "number" && lastInput != "equals") {
-        if (this.dataset.operate === "equals") {
-            // prints syntax error if equal sign is pressed after an operator sign
+        if (operation === "equals") {
+            // Prints syntax error if equal sign is pressed after an operator sign
             inputScreen.textContent = "Syntax ERROR";
-            lastInput = this.dataset.operate;
+            lastInput = operation;
             
             console.log(lastInput);
             return;
         } 
         deleteOneStep();
-        lastInput = this.dataset.operate;
+        lastInput = operation;
         
         inputScreen.textContent += this.textContent;
         return;
     }
 
     if (step === 1) {
-        // this stores first input as answer if after 
+        // This stores first input as answer if after 
         // first input, user operates equals
-        if (this.dataset.operate === "equals") {
+        if (operation === "equals") {
             firstInput = parseFloat(inputNumbers.join(""));
             answer = firstInput;
-            answerScreen.textContent = answer;
+            postAnswer(answer);
             firstInput = answer;
             inputNumbers= [];
-            lastInput = this.dataset.operate;
+            lastInput = operation;
             
             step = 1;
             return;
         } else {
+            // chains operation without pressing equals
             if (firstInput != undefined && answer === firstInput) {
-                // stored firstInput is answer of last operation
+                // Stores the Answer of last operation as First Input,
+                // then continue steps
                 inputScreen.textContent += this.textContent;
                 answerScreen.textContent = "";
-                lastInput = this.dataset.operate;
+                lastInput = operation;
                 
                 step = 2;
                 return;
 
             } else if (inputNumbers.length === 0) {
-                //operator was pressed before any number
+                // Operator was pressed before any number, makes
+                // first input as ZERO, then continue steps
                 firstInput = 0;
                 inputScreen.textContent += firstInput;
                 
             } else {
+                // Stores first input and continue step
                 firstInput = parseFloat(inputNumbers.join(""));
                 
             }
         }
 
         inputNumbers= [];
-        lastInput = this.dataset.operate;
-        
+        lastInput = operation;
         inputScreen.textContent += this.textContent;
         step = 2;
 
     } else if (step === 2) {
-        if (this.dataset.operate != "equals") {
+        if (operation != "equals") {
+            // Chains operation by pressing operator sign 
+            // instead of pressing equals
             secondInput = parseFloat(inputNumbers.join(""));
             runOperation(lastOperation);
             inputScreen.textContent = answer;
@@ -128,9 +133,10 @@ function operatesInputs() {
             step = 2;
             console.log(lastInput);
         } else {
+            // Runs the operation after pressing equals
             secondInput = parseFloat(inputNumbers.join(""));
             runOperation(lastOperation);
-            answerScreen.textContent = answer;
+            postAnswer(answer);
             firstInput = answer;
             secondInput = "";
             inputNumbers= [];
@@ -141,17 +147,18 @@ function operatesInputs() {
         }
         
     } else if (step === 3) {
-        if (chain === true && this.dataset.operate != "equals") {
+        if (chain === true && operation != "equals") {
             inputScreen.textContent = answer;
             inputScreen.textContent += this.textContent;
             answerScreen.textContent = "";
             step = 2;
-        } else if (this.dataset.operate === "equals") {
+        } else if (operation === "equals") {
+            // Do nothing if after an answer equals is pressed again
             return;
         }
     }
 
-lastInput = this.dataset.operate;
+lastInput = operation;
 }
 
 
@@ -177,8 +184,8 @@ function deleteOneStep() {
 }
 
 
-function roundAnswer(answer) {
-    let stringAnswer = answer.toString();
+function postAnswer(number) {
+    let stringAnswer = number.toString();
     console.log(stringAnswer);
     let decimalIndex = stringAnswer.indexOf(".");
 
@@ -188,4 +195,11 @@ function roundAnswer(answer) {
     
     let decimalPlaces = stringAnswer.length - decimalIndex;
     let wholeNumbers = decimalIndex;
+
+    if (stringAnswer.length > 16) {
+        let result = number.toFixed(16 - wholeNumbers);
+        answerScreen.textContent = result;
+    } else {
+        answerScreen.textContent = answer;
+    }
 }
