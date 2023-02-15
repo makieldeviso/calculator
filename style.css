@@ -47,6 +47,9 @@ section#screen {
 
 #input-screen, #answer-screen {
     border: 1px solid black;
+    width: 100%;
+    height: 3rem;
+    overflow: auto;
 }
 
 #input-screen p, #answer-screen p {
