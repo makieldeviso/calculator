@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" defer></script>
+    <meta name="author" content="Fred Mark Baldeviso">
+    <meta name="description" content="Calculator WebApp">
+    <title>Calculator</title>
+</head>
+<body>
+    <header>
+        <h1>Calculator</h1>
+    </header>
+    <main>
+        <div id="calculator-body">
+            <section id = "screen">
+                <div id="input-screen"><p></p></div>
+                <div id="answer-screen"><p></p></div>
+            </section>
+    
+            <section id="buttons-pad">
+                <div id="number-buttons">
+                    <div class="number-divider">
+                        <button value="7">7</button>
+                        <button value="8">8</button>
+                        <button value="9">9</button>
+                    </div>       
+                    <div class="number-divider">
+                        <button value="4">4</button>
+                        <button value="5">5</button>
+                        <button value="6">6</button>
+                    </div>
+                    <div class="number-divider">
+                        <button value="1">1</button>
+                        <button value="2">2</button>
+                        <button value="3">3</button>
+                    </div>
+                    <div class="number-divider">
+                        <button value="0">0</button>
+                        <button id="decimal" value=".">&#8901;</button>
+                    </div>
+                </div>
+                <div id="operators">
+                    
+                    <div class="number-divider">
+                        <button>DEL</button>
+                        <button>AC</button>
+                    </div>
+                    <div class="number-divider">
+                        <button data-screen="types" data-operate="multiply">&#215;</button>
+                        <button data-screen="types" data-operate="divide">&#247;</button>
+                    </div>
+                    <div class="number-divider">
+                        <button data-screen="types" data-operate="add">&#43;</button>
+                        <button data-screen="types" data-operate="subtract">&#8722;</button>
+                    </div>
+                    <div class="number-divider">
+                        <button data-screen="types" data-action="answer">Ans</button>
+                        <button data-action="equals" data-operate="equals">&#61;</button>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </section>
+
+        </div>
+        
+    </main>
+
+    <footer></footer>
+    
+</body>
+</html>
