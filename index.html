@@ -12,7 +12,10 @@
 </head>
 <body>
     <header>
-        <h1>Calculator</h1>
+        <div>
+            <h1>PMC</h1>
+            <h2>Poor Man's Calc Ver.1A</h2>
+        </div>
     </header>
     <main>
         <div id="calculator-body">
@@ -50,8 +53,8 @@
                 <div id="operators">
                     
                     <div class="number-divider">
-                        <button data-action="delete">DEL</button>
-                        <button data-action="all-clear">AC</button>
+                        <button id="del" data-action="delete">DEL</button>
+                        <button id="ac" data-action="all-clear">AC</button>
                     </div>
                     <div class="number-divider">
                         <button data-screen="types" data-operate="multiply">&#215;</button>
@@ -62,7 +65,7 @@
                         <button data-screen="types" data-operate="subtract">&#8722;</button>
                     </div>
                     <div class="number-divider">
-                        <button data-screen="types" data-action="answer">Ans</button>
+                        <!-- <button data-screen="types" data-action="answer">Ans</button> -->
                         <button data-action="equals" data-operate="equals">&#61;</button>
                     </div>
                     
