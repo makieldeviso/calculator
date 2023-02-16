@@ -45,15 +45,33 @@ section#screen {
     justify-content: space-between;
 }
 
-#input-screen, #answer-screen {
+.input-screen-container {
+    display: flex;
+    gap: 2px;
+}
+
+#input-screen {
+    border: 1px solid black;
+    width: max-content;
+    height: 3rem;
+}
+#screen-cursor {
+    height: 3rem;
+    width: 5px;
+    background-color: blue;
+}
+#answer-screen {
     border: 1px solid black;
     width: 100%;
-    height: 3rem;
-    overflow: auto;
+    height: 4rem;
+    direction: rtl;
 }
 
 #input-screen p, #answer-screen p {
-    font-size: 2.5rem;
+    font-size: 3rem;
+}
+#answer-screen p {
+    font-size: 4rem;
 }
 
 

@@ -7,25 +7,28 @@ let lastOperation = []; // Stores the last operator executed, except equals
 let inputNumbers = []; //stores DIGITS in an array, later used to be combined as a float/ number
 let currentOperation;
 
-
+// Number Buttons ------
 let numberButtons = document.querySelectorAll("#number-buttons button");
     numberButtons.forEach(button => {
         button.addEventListener("click", typesNumber);
     })
 
+// AC and DEL ----------
 let allClearButton = document.querySelector("[data-action='all-clear']");
     allClearButton.addEventListener("click", allClear);
 
 let deleteButton = document.querySelector("[data-action='delete']");
     deleteButton.addEventListener("click", backSpace);
 
+// Screens -------------
 let inputScreen = document.querySelector("#input-screen p");
 let answerScreen = document.querySelector("#answer-screen p");
 
 
 
 function typesNumber() {
-// resets calculator after pressing a number upon Math ERROR
+
+// Resets calculator after pressing a number upon Math ERROR
     if (answerScreen.textContent === "Math ERROR") {
         allClear();
     }
@@ -40,6 +43,11 @@ function typesNumber() {
         step = 1;
         inputNumbers = [];
     }
+
+// Limits the screen input to 20 characters
+    if (inputScreen.textContent.length === 20) {
+         return;
+     }
 
 // Sets the characteristic of pressing decimal
     if (this.value === ".") {
@@ -69,8 +77,9 @@ function typesNumber() {
 
     inputNumbers.push(this.value);
     inputScreen.textContent += this.value;
-    // console.log(lastInput);
-    // console.log(inputNumbers);
+    
+    console.log(inputNumbers);
+
 }
 
 
@@ -83,6 +92,23 @@ operatorButton.forEach(button => {
 
 let step = 1;
 function operatesInputs() {
+// Limits the screen input to 20 characters
+    let continueOperation = false;
+    if (inputScreen.textContent.length === 20) {
+        let screenChar = [...inputScreen.textContent];
+        console.log(screenChar);
+
+        screenChar.forEach(char => {
+            if (char === "+" || char === "−" || char === "×" || char === "÷" ) {
+                continueOperation = true;
+            }
+        });
+
+        if (continueOperation === false) {
+            return;
+        }
+    }
+
     let operation = this.dataset.operate;
     // console.log(lastInput);
 
@@ -284,8 +310,8 @@ function postAnswer(number) {
     // let decimalPlaces = stringAnswer.length - decimalIndex;
     let wholeNumbers = decimalIndex; // assign to new variable to be readable
 
-    if (stringAnswer.length > 16) {
-        let result = number.toFixed(16 - wholeNumbers); //this is string
+    if (stringAnswer.length > 20) {
+        let result = number.toFixed(20 - wholeNumbers); //this is string
         answerScreen.textContent = result;
     } else {
         if (number === Infinity || number === -Infinity || number.toString() === "NaN" ) {
@@ -357,4 +383,11 @@ function backSpace() {
     } else {
         lastInput = parseFloat(inputScreen.textContent[inputScreen.textContent.length - 1]);
     }
+}
+
+
+let continueOperation = false;
+function limitCharacters() {
+    // Limits the screen input to 20 characters
+    
 }
