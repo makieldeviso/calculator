@@ -25,12 +25,12 @@ let answerScreen = document.querySelector("#answer-screen p");
 
 
 function typesNumber() {
-    // resets calculator after pressing a number upon Math ERROR
+// resets calculator after pressing a number upon Math ERROR
     if (answerScreen.textContent === "Math ERROR") {
         allClear();
     }
 
-    // User stops the operation chain by typing new set of operands
+// User stops the operation chain by typing new set of operands
     if (lastInput === "equals") {
         chain = false;
         firstInput = undefined;
@@ -41,11 +41,36 @@ function typesNumber() {
         inputNumbers = [];
     }
 
-    
-    lastInput = parseFloat(this.value); //determines that the last input is a number and not an operator
+// Sets the characteristic of pressing decimal
+    if (this.value === ".") {
+        // Puts Zero before the decimal if there is no preceding numbers yet
+        if (inputNumbers.length === 0) {
+            inputNumbers.push("0");    // Save additional zero to avoid problem in DEL
+            lastInput = 0;             // Save additional zero to avoid problem in DEL
+            inputScreen.textContent += "0";
+        } else {
+            // If there is already a decimal, cancels input
+            let decimalFound = false;
+            inputNumbers.forEach(digit => {
+                if (digit === ".") {
+                    decimalFound = true;
+                }
+            });
+
+            if (decimalFound === true) {
+                return;
+            }
+        }
+    }
+
+    //determines that the last input is a number and not an operator, 
+    // even decimal will return NaN which is a number data type
+    lastInput = parseFloat(this.value); 
+
     inputNumbers.push(this.value);
     inputScreen.textContent += this.value;
     // console.log(lastInput);
+    // console.log(inputNumbers);
 }
 
 
