@@ -7,11 +7,39 @@ let lastOperation = []; // Stores the last operator executed, except equals
 let inputNumbers = []; //stores DIGITS in an array, later used to be combined as a float/ number
 let currentOperation;
 
+let wholeCalc = document.querySelector("#whole-calc");
+
 // Number Buttons ------
 let numberButtons = document.querySelectorAll("#number-buttons button");
     numberButtons.forEach(button => {
-        button.addEventListener("click", typesNumber);
+        button.addEventListener("click", typesNumberClick);
     })
+
+    document.addEventListener("keydown", typesNumberButton);
+    
+
+function typesNumberClick() {
+        let click = this.value;
+        typesNumber(click);
+
+}
+
+function typesNumberButton(event) {
+        let keypress = event.key;
+        let allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
+
+        if (allowedNumPress.includes(keypress)) {
+            typesNumber(keypress);
+        }
+}       
+
+// function waw(event) {
+//     console.log(event);
+// }
+
+
+
+
 
 // AC and DEL ----------
 let allClearButton = document.querySelector("[data-action='all-clear']");
@@ -26,15 +54,19 @@ let cursor = document.querySelector("#screen-cursor");
 let answerScreen = document.querySelector("#answer-screen p");
 let answerExponent = document.querySelector("#answer-screen .exponent");
 
-let wholeCalc = document.querySelector("#whole-calc");
 
-function typesNumber() {
-// Adds pressing animation   
-    console.log("waw");
+
+
+
+
+
+function typesNumber(event) {
+// Adds pressing animation
+    let thisButton = document.querySelector(`[value='${event}']`);   
     setTimeout(() => {
-        this.classList.toggle("pressed");
+        thisButton.classList.toggle("pressed");
     },100);
-    this.classList.toggle("pressed");
+        thisButton.classList.toggle("pressed");
 
     if (cursor.hasAttribute("class")) {
         cursor.classList.remove("limit");
@@ -65,16 +97,14 @@ function typesNumber() {
         inputNumbers = [];
     }
 
-
 // Limits the screen input to 18 characters
     if (inputScreen.textContent.length === 18) {
         cursor.classList.add("limit");
-        return;
-        
+        return;  
      }
 
 // Sets the characteristic of pressing decimal
-    if (this.value === ".") {
+    if (event === ".") {
         // Puts Zero before the decimal if there is no preceding numbers yet
         if (inputNumbers.length === 0) {
             inputNumbers.push("0");    // Save additional zero to avoid problem in DEL
@@ -83,11 +113,10 @@ function typesNumber() {
         } else {
             // If there is already a decimal, cancels input
             let decimalFound = false;
-            inputNumbers.forEach(digit => {
-                if (digit === ".") {
-                    decimalFound = true;
-                }
-            });
+
+            if (inputNumbers.includes(".")) {
+                decimalFound = true;
+            }
 
             if (decimalFound === true) {
                 return;
@@ -98,21 +127,16 @@ function typesNumber() {
 
     //determines that the last input is a number and not an operator, 
     // even decimal will return NaN which is a number data type
-    lastInput = parseFloat(this.value); 
+    lastInput = parseFloat(event); 
     cursor.style.visibility = "visible";
-    inputNumbers.push(this.value);
-    inputScreen.textContent += this.value;
-    
-    
+    inputNumbers.push(event);
+    inputScreen.textContent += event;
 }
-
 
 let operatorButton = document.querySelectorAll("[data-operate]");
 operatorButton.forEach(button => {
     button.addEventListener("click", operatesInputs);
 });
-
-
 
 let step = 1;
 function operatesInputs() {
@@ -132,7 +156,6 @@ function operatesInputs() {
     if (inputScreen.textContent.length === 18) {
         let screenChar = [...inputScreen.textContent];
         cursor.classList.add("limit");
-        // console.log(screenChar);
 
         screenChar.forEach(char => {
             if (char === "+" || char === "−" || char === "×" || char === "÷" ) {
@@ -146,16 +169,15 @@ function operatesInputs() {
     }
 
     let operation = this.dataset.operate;
-    // console.log(lastInput);
 
-// Does not work if last last answer was exponent, large number 
+// Does not work if last answer was exponent, large number 
     if (answerExponent.textContent.length > 0) {
         inputScreen.textContent = "Big Integer [AC]: Cancel"
         cursor.style.visibility = "hidden";
         return;
     }
 
-//  Does not work on Math ERROR, requires AC
+//  Does not work on Math ERROR and Syntax ERROR, requires AC
     if (answerScreen.textContent === "Math ERROR" || answerScreen.textContent === "Syntax ERROR") {
         cursor.style.visibility = "hidden";
         return;
@@ -169,14 +191,17 @@ function operatesInputs() {
             lastOperation.push(currentOperation); //stores previous operations
         }
 
-        //minimizes array into 2(length)
+        //maximizes array into 2(length)
         if (lastOperation.length > 2) { 
             lastOperation.shift();
         };
 
         if (typeof lastInput === "number" && firstInput != undefined) {
+            // Used if firstInput is already defined, 
+            //  operator is pressed and awaiting second input
             currentOperation = lastOperation[0];
         } else {
+            // Used if firstInput is not yet defined
             currentOperation = lastOperation[1];
         }
 
@@ -188,8 +213,6 @@ function operatesInputs() {
             currentOperation = lastOperation[1];
         }
     }
-
-    // console.log(currentOperation);
 
 // Don't run equals if no number is printed first
     if (inputScreen.textContent.length === 0 && operation === "equals") {
@@ -242,7 +265,6 @@ function operatesInputs() {
             // first input as ZERO, then continue steps
                 firstInput = 0;
                 inputScreen.textContent += firstInput;
-                // console.log(firstInput);
                 
             } else {
             // Stores first input and continue step
@@ -277,10 +299,10 @@ function operatesInputs() {
             firstInput = answer;
             secondInput = undefined;
             inputNumbers= [];
-            // console.log(secondInput);
+            
             chain = true;
             step = 2;
-            // console.log(lastInput);
+            
         } else {
         // Runs the operation after pressing equals
             secondInput = parseFloat(inputNumbers.join(""));
@@ -300,9 +322,7 @@ function operatesInputs() {
             secondInput = undefined;
             inputNumbers= [];
             step = 3;
-            chain = true;
-            // console.log(firstInput);
-            // console.log(secondInput);
+            chain = true;;
         }
         
     } else if (step === 3) {
@@ -345,11 +365,11 @@ function postAnswer(number) {
     let decimalIndex = stringAnswer.indexOf("."); //finds the index of decimal
 
     if (decimalIndex === -1) {
-        decimalIndex = stringAnswer.length;
+        decimalIndex = stringAnswer.length; // decimalIndex equals to string length if no decimal
     }
     
     let decimalPlaces = stringAnswer.length - decimalIndex;
-    let wholeNumbers = decimalIndex; // assign to new variable to be readable
+    let wholeNumbers = decimalIndex; // Assign to new variable to be readable
 
     if (stringAnswer.length > 12 && decimalPlaces > 0) {
         if (wholeNumbers > 12) {
@@ -362,7 +382,6 @@ function postAnswer(number) {
 
     } else if (stringAnswer.length > 12 && decimalPlaces === 0) {
         result = number.toExponential(6); //this is string, convert large number to exponential
-        console.log(result);
 
         let expRegex = /e[+-]?\d+/; // finds the "e+num" characters
         let exponential = result.match(expRegex); // this is an array
