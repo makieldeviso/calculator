@@ -12,53 +12,57 @@ let wholeCalc = document.querySelector("#whole-calc");
 // Number Buttons ------
 let numberButtons = document.querySelectorAll("#number-buttons button");
     numberButtons.forEach(button => {
-        button.addEventListener("click", typesNumberClick);
-    })
+        button.addEventListener("click", (typesNumberClick));
+    });
 
     document.addEventListener("keydown", typesNumberButton);
-    
 
-function typesNumberClick() {
-        let click = this.value;
-        typesNumber(click);
+    function typesNumberClick() {
+            let click = this.value;
+            typesNumber(click);
+    }
 
-}
+    function typesNumberButton(event) {
+            let keypress = event.key;
+            let allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
 
-function typesNumberButton(event) {
-        let keypress = event.key;
-        let allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
+            if (allowedNumPress.includes(keypress)) {
+                typesNumber(keypress);
+            }
+    }       
 
-        if (allowedNumPress.includes(keypress)) {
-            typesNumber(keypress);
-        }
-}       
-
-// function waw(event) {
-//     console.log(event);
-// }
-
-
-
-
-
-// AC and DEL ----------
+// AC ----------
 let allClearButton = document.querySelector("[data-action='all-clear']");
-    allClearButton.addEventListener("click", allClear);
+    allClearButton.addEventListener("click", () => allClear());
 
+    document.addEventListener("keydown", allClearPress);
+
+    function allClearPress(event) {
+        let keypress = event.key; // "Escape" or "End"
+        if (keypress === "Escape" || keypress === "End") {
+            allClear();
+        }
+    }
+
+// DEL ----------
 let deleteButton = document.querySelector("[data-action='delete']");
-    deleteButton.addEventListener("click", backSpace);
+    deleteButton.addEventListener("click", () => backSpace());
+
+    document.addEventListener("keydown", backSpaceButton);
+
+    function backSpaceButton(event) {
+        let keypress = event.key; // "Backspace" or "Delete"
+        console.log(keypress);
+        if (keypress === "Backspace" || keypress === "Delete") {
+            backSpace();
+        }
+    }
 
 // Screens -------------
 let inputScreen = document.querySelector("#input-screen p");
 let cursor = document.querySelector("#screen-cursor");
 let answerScreen = document.querySelector("#answer-screen p");
 let answerExponent = document.querySelector("#answer-screen .exponent");
-
-
-
-
-
-
 
 function typesNumber(event) {
 // Adds pressing animation
@@ -95,6 +99,7 @@ function typesNumber(event) {
         cursor.style.visibility = "visible";
         step = 1;
         inputNumbers = [];
+        lastOperation = [];
     }
 
 // Limits the screen input to 18 characters
@@ -133,18 +138,83 @@ function typesNumber(event) {
     inputScreen.textContent += event;
 }
 
+// Operators ------------
+
 let operatorButton = document.querySelectorAll("[data-operate]");
-operatorButton.forEach(button => {
-    button.addEventListener("click", operatesInputs);
-});
+    operatorButton.forEach(button => {
+        button.addEventListener("click", operatesInputsClick);
+    });
+
+    document.addEventListener("keydown", operatesInputsPress);
+
+    let operatorsArr = [];
+    function OperatorsBank (button, operation, textContent) {
+        this.button = button;
+        this.operation = operation;
+        this.textContent = textContent;
+        operatorsArr.push(this);
+    } 
+
+    // I can code this by using the node[], but choose to keep this for readability and further features 
+    let multiplyButton = document.querySelector("#multiply");
+    let divideButton = document.querySelector("#divide");
+    let addButton = document.querySelector("#add");
+    let subtractButton = document.querySelector("#subtract");
+    let equalsButton = document.querySelector("#equals");
+
+    let multiplyObj = new OperatorsBank(multiplyButton, "multiply", "×" );
+    let divideObj = new OperatorsBank(divideButton, "divide", "÷" );
+    let addObj = new OperatorsBank(addButton, "add", "+" );
+    let subtractObj = new OperatorsBank(subtractButton, "subtract", "−" );
+    let equalsObj = new OperatorsBank(equalsButton, "equals", "=" );
+
+    function operatesInputsClick() {
+        let operation = this.dataset.operate;
+        switch (operation) {
+
+            case "multiply":
+                operatesInputs(multiplyObj);
+                break;
+            case "divide":
+                operatesInputs(divideObj);
+                break;
+            case "add":
+                operatesInputs(addObj);
+                break;
+            case "subtract":
+                operatesInputs(subtractObj);
+                break;
+            case "equals":
+                operatesInputs(equalsObj);
+                break;
+        }
+    }
+
+    function operatesInputsPress(event) {
+        console.log(event);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 let step = 1;
-function operatesInputs() {
+function operatesInputs(event) {
 // Adds pressing animation   
     setTimeout(() => {
-        this.classList.toggle("pressed");
+        event.button.classList.toggle("pressed");
     },100);
-        this.classList.toggle("pressed");
+        event.button.classList.toggle("pressed");
 
      if (cursor.hasAttribute("class")) {
         cursor.classList.remove("limit");
@@ -168,7 +238,7 @@ function operatesInputs() {
         }
     }
 
-    let operation = this.dataset.operate;
+    let operation = event.operation;
 
 // Does not work if last answer was exponent, large number 
     if (answerExponent.textContent.length > 0) {
@@ -231,7 +301,7 @@ function operatesInputs() {
     // changes operator on screen 
         deleteOneStep();
         lastInput = operation;
-        inputScreen.textContent += this.textContent;
+        inputScreen.textContent += event.textContent;
         return;
     }
 
@@ -253,7 +323,7 @@ function operatesInputs() {
             if (firstInput != undefined && answer === firstInput) {
             // Stores the Answer of last operation as First Input,
             // then continue steps
-                inputScreen.textContent += this.textContent;
+                inputScreen.textContent += event.textContent;
                 answerScreen.textContent = "";
                 lastInput = operation; // advance save since there is return
 
@@ -275,7 +345,7 @@ function operatesInputs() {
 
         inputNumbers= []; //clears typing storage
         lastInput = operation; // saves operation as last input
-        inputScreen.textContent += this.textContent; // puts the operator on screen
+        inputScreen.textContent += event.textContent; // puts the operator on screen
         step = 2;
 
     } else if (step === 2) {
@@ -295,7 +365,7 @@ function operatesInputs() {
             }
 
             inputScreen.textContent = answer;
-            inputScreen.textContent += this.textContent;
+            inputScreen.textContent += event.textContent;
             firstInput = answer;
             secondInput = undefined;
             inputNumbers= [];
@@ -322,13 +392,13 @@ function operatesInputs() {
             secondInput = undefined;
             inputNumbers= [];
             step = 3;
-            chain = true;;
+            chain = true;
         }
         
     } else if (step === 3) {
         if (chain === true && operation != "equals") {
             inputScreen.textContent = answer;
-            inputScreen.textContent += this.textContent;
+            inputScreen.textContent += event.textContent;
             // Does not post answer on answer screen if user is
             //  still chaining operations
             answerScreen.textContent = "";
@@ -371,16 +441,7 @@ function postAnswer(number) {
     let decimalPlaces = stringAnswer.length - decimalIndex;
     let wholeNumbers = decimalIndex; // Assign to new variable to be readable
 
-    if (stringAnswer.length > 12 && decimalPlaces > 0) {
-        if (wholeNumbers > 12) {
-            let result = number.toFixed(wholeNumbers - 12); //this is string
-        } else {
-            result = number.toFixed(12 - wholeNumbers); //this is string
-        }
-
-        answerScreen.textContent = result;
-
-    } else if (stringAnswer.length > 12 && decimalPlaces === 0) {
+     if (stringAnswer.length > 12) {
         result = number.toExponential(6); //this is string, convert large number to exponential
 
         let expRegex = /e[+-]?\d+/; // finds the "e+num" characters
@@ -401,11 +462,12 @@ function postAnswer(number) {
 }
 
 function allClear() {
-// Adds pressing animation   
+// Adds pressing animation
+let acKey = document.querySelector("#ac");
     setTimeout(() => {
-        this.classList.toggle("pressed");
+        allClearButton.classList.toggle("pressed");
     },100);
-        this.classList.toggle("pressed");
+       allClearButton.classList.toggle("pressed");
 
     if (cursor.hasAttribute("class")) {
         cursor.classList.remove("limit");
@@ -430,11 +492,11 @@ function backSpace() {
     let inputScreenText = inputScreen.textContent;
     let lastChar = inputScreenText.slice(inputScreenText.length - 1);
 
-    // Adds pressing animation   
+    // Adds pressing animation
     setTimeout(() => {
-        this.classList.toggle("pressed");
+        deleteButton.classList.toggle("pressed");
     },100);
-        this.classList.toggle("pressed");
+        deleteButton.classList.toggle("pressed");
     
     if (cursor.hasAttribute("class")) {
         cursor.classList.remove("limit");
