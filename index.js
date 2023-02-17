@@ -26,8 +26,20 @@ let cursor = document.querySelector("#screen-cursor");
 let answerScreen = document.querySelector("#answer-screen p");
 let answerExponent = document.querySelector("#answer-screen .exponent");
 
-function typesNumber() {
+let wholeCalc = document.querySelector("#whole-calc");
 
+function typesNumber() {
+// Adds pressing animation   
+    console.log("waw");
+    setTimeout(() => {
+        this.classList.toggle("pressed");
+    },100);
+    this.classList.toggle("pressed");
+
+    if (cursor.hasAttribute("class")) {
+        cursor.classList.remove("limit");
+    }
+     
 // Does not work if last last answer was exponent, large number 
     if (answerExponent.textContent.length > 0) {
         inputScreen.textContent = "Big Integer [AC]: Cancel"
@@ -35,8 +47,9 @@ function typesNumber() {
     }
 
 // Resets calculator after pressing a number upon Math ERROR
-    if (answerScreen.textContent === "Math ERROR") {
-        allClear();
+    if (answerScreen.textContent === "Math ERROR" || answerScreen.textContent === "Syntax ERROR") {
+        return;
+        // allClear();
     }
 
 // User stops the operation chain by typing new set of operands
@@ -53,9 +66,11 @@ function typesNumber() {
     }
 
 
-// Limits the screen input to 20 characters
-    if (inputScreen.textContent.length === 20) {
+// Limits the screen input to 18 characters
+    if (inputScreen.textContent.length === 18) {
+        cursor.classList.add("limit");
         return;
+        
      }
 
 // Sets the characteristic of pressing decimal
@@ -88,7 +103,7 @@ function typesNumber() {
     inputNumbers.push(this.value);
     inputScreen.textContent += this.value;
     
-    // console.log(inputNumbers);
+    
 }
 
 
@@ -101,11 +116,22 @@ operatorButton.forEach(button => {
 
 let step = 1;
 function operatesInputs() {
-// Limits the screen input to 20 characters
+// Adds pressing animation   
+    setTimeout(() => {
+        this.classList.toggle("pressed");
+    },100);
+        this.classList.toggle("pressed");
+
+     if (cursor.hasAttribute("class")) {
+        cursor.classList.remove("limit");
+    }
+
+// Limits the screen input to 18 characters
     let continueOperation = false;
     cursor.style.visibility = "visible";
-    if (inputScreen.textContent.length === 20) {
+    if (inputScreen.textContent.length === 18) {
         let screenChar = [...inputScreen.textContent];
+        cursor.classList.add("limit");
         // console.log(screenChar);
 
         screenChar.forEach(char => {
@@ -130,11 +156,10 @@ function operatesInputs() {
     }
 
 //  Does not work on Math ERROR, requires AC
-    if (answerScreen.textContent === "Math ERROR") {
+    if (answerScreen.textContent === "Math ERROR" || answerScreen.textContent === "Syntax ERROR") {
         cursor.style.visibility = "hidden";
         return;
     }
-
 
 // Saves the last operation for operation function to work
     if(operation != "equals") {
@@ -357,6 +382,16 @@ function postAnswer(number) {
 }
 
 function allClear() {
+// Adds pressing animation   
+    setTimeout(() => {
+        this.classList.toggle("pressed");
+    },100);
+        this.classList.toggle("pressed");
+
+    if (cursor.hasAttribute("class")) {
+        cursor.classList.remove("limit");
+    }
+
     chain = false;
     firstInput = undefined;
     secondInput = undefined;
@@ -375,6 +410,16 @@ function allClear() {
 function backSpace() {
     let inputScreenText = inputScreen.textContent;
     let lastChar = inputScreenText.slice(inputScreenText.length - 1);
+
+    // Adds pressing animation   
+    setTimeout(() => {
+        this.classList.toggle("pressed");
+    },100);
+        this.classList.toggle("pressed");
+    
+    if (cursor.hasAttribute("class")) {
+        cursor.classList.remove("limit");
+    }
 
 // Does not work if the answer screen is not yet cleared
         if (answerScreen.textContent.length != 0) {

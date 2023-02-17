@@ -6,43 +6,51 @@
     box-sizing: border-box;
 }
 
-header, main, footer  {
+main, footer  {
     width: 80vw;
     margin: auto;
 }
-header {
-    height: 20vh;
-    padding: 10px 10px 0;
-}
+
 main {
-    height: 75vh;
-    padding: 0 10px 10px;
+    height: 95vh;
+    padding: 10px;
 }
 footer {
     height: 5vh;
 }
 
-header div {
+#whole-calc {
+    width: 80vw;
     margin: auto;
-    padding: 10px;
-    width: 50%;
+    height: 95vh;
     max-width: 570px;
     min-width: 570px;
+    border-radius: 10px 10px 50px 50px;
+    box-shadow: 0 0 10px 2px#4B6587;
+    background-image: url('./images/motherboard.png');
+    background-position: center;
+    background-size: cover;
+}
+
+.head {
+    margin: auto;
+    padding: 10px;
+    width: 100%;
     border: 1px solid black;
-    border-radius: calc(10px + 1vw) calc(10px + 1vw) 0 0;
+    border-radius: 10px 10px 0 0;
     border-bottom: none;
-    height: 100%;
+    height: 20%;
     background-color: #E8F0F2;
-    background: linear-gradient(#a5bdc5, #dae9ee, #E8F0F2);
-    border-top: 3px solid #81b5c6;
+    background: linear-gradient(rgba(165, 189, 197, 90%), rgb(218, 233, 238, 90%), #E8F0F2);
+    border-top: 10px solid #9cc3d0;
     border-right: 10px solid #dae9ee;
     border-left: 10px solid #dae9ee;
 }
-header h1 {
+.head h1 {
     font-family: 'Arimo', sans-serif;
     display: inline-block;
 }
-header h2 {
+.head h2 {
     font-family: 'Lora', serif;
     font-size: 1rem;
 }
@@ -51,21 +59,16 @@ header h2 {
 #calculator-body {
     margin: auto;
     padding: 0 20px 10px;
-    width: 50%;
-    max-width: 570px;
-    min-width: 570px;
-    border: 1px solid black;
+    width: 100%;
     border-top: none;
-    height: 100%;
+    height: 80%;
     background-color: #E8F0F2;
     border-right: 10px solid #dae9ee;
     border-left: 10px solid #dae9ee;
     border-bottom: 30px solid #dfeaed;
     border-radius: 0 0 50px 50px;
-    background-image: url('./images/lines.png');
-    background-position: center;
-    background-size: cover;
 }
+
 
 @media only screen  and (width < 1300px) {
     main, header {
@@ -218,7 +221,7 @@ button#del, button#ac {
 }
 
 #number-buttons button:hover, #operators button:hover {
-    filter: brightness(80%);
+    filter: brightness(90%);
 }
 
 
@@ -238,12 +241,26 @@ button#del, button#ac {
 }
 
 
+#number-buttons button.pressed,
+#operators button.pressed,
+#operators button#del.pressed,
+#operators button#ac.pressed {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-in-out;
+}
+
+#screen-cursor.limit {
+    width: 15px;
+    background-color: #232d3f;
+    animation: blink 2s infinite;
+}
+
 
 
 
 
 /* flip */
-.card {
+/* .card {
     width: 200px;
     height: 200px;
     position: relative;
@@ -270,4 +287,4 @@ button#del, button#ac {
   
   .card:hover {
     transform: rotateY(180deg);
-  }
+  } */

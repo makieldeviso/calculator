@@ -11,75 +11,70 @@
     <title>Calculator</title>
 </head>
 <body>
-    <header>
-        <div>
-            <h1>PMC</h1>
-            <h2>Poor Man's Calc Ver.1A</h2>
-        </div>
-    </header>
     <main>
-        <div id="calculator-body">
-            <section id = "screen">
-                <div class="input-screen-container">
-                    <div id="input-screen"><p></p></div>
-                    <div id="screen-cursor"></div>
-                </div>
-                
-                <div id="answer-screen">
-                    <p></p>
-                    <sup class="exponent"></sup>
-                </div>
-            </section>
-    
-            <section id="buttons-pad">
-                <div id="number-buttons">
-                    <div class="number-divider">
-                        <button value="7">7</button>
-                        <button value="8">8</button>
-                        <button value="9">9</button>
-                    </div>       
-                    <div class="number-divider">
-                        <button value="4">4</button>
-                        <button value="5">5</button>
-                        <button value="6">6</button>
-                    </div>
-                    <div class="number-divider">
-                        <button value="1">1</button>
-                        <button value="2">2</button>
-                        <button value="3">3</button>
-                    </div>
-                    <div class="number-divider">
-                        <button value="0">0</button>
-                        <button id="decimal" value=".">&#8901;</button>
-                    </div>
-                </div>
-                <div id="operators">
-                    
-                    <div class="number-divider">
-                        <button id="del" data-action="delete">DEL</button>
-                        <button id="ac" data-action="all-clear">AC</button>
-                    </div>
-                    <div class="number-divider">
-                        <button data-screen="types" data-operate="multiply">&#215;</button>
-                        <button data-screen="types" data-operate="divide">&#247;</button>
-                    </div>
-                    <div class="number-divider">
-                        <button data-screen="types" data-operate="add">&#43;</button>
-                        <button data-screen="types" data-operate="subtract">&#8722;</button>
-                    </div>
-                    <div class="number-divider">
-                        <!-- <button data-screen="types" data-action="answer">Ans</button> -->
-                        <button data-action="equals" data-operate="equals">&#61;</button>
+        <div id="whole-calc">
+            <div class="head">
+                <h1>PMC</h1>
+                <h2>Poor Man's Calc Ver.1A</h2>
+            </div>
+            <div id="calculator-body">
+                <section id = "screen">
+                    <div class="input-screen-container">
+                        <div id="input-screen"><p></p></div>
+                        <div id="screen-cursor"></div>
                     </div>
                     
-                    
-                    
-                </div>
-            </section>
-
-        </div>
+                    <div id="answer-screen">
+                        <p></p>
+                        <sup class="exponent"></sup>
+                    </div>
+                </section>
         
+                <section id="buttons-pad">
+                    <div id="number-buttons">
+                        <div class="number-divider">
+                            <button value="7">7</button>
+                            <button value="8">8</button>
+                            <button value="9">9</button>
+                        </div>       
+                        <div class="number-divider">
+                            <button value="4">4</button>
+                            <button value="5">5</button>
+                            <button value="6">6</button>
+                        </div>
+                        <div class="number-divider">
+                            <button value="1">1</button>
+                            <button value="2">2</button>
+                            <button value="3">3</button>
+                        </div>
+                        <div class="number-divider">
+                            <button value="0">0</button>
+                            <button id="decimal" value=".">&#8901;</button>
+                        </div>
+                    </div>
+                    <div id="operators"> 
+                        <div class="number-divider">
+                            <button id="del" data-action="delete">DEL</button>
+                            <button id="ac" data-action="all-clear">AC</button>
+                        </div>
+                        <div class="number-divider">
+                            <button data-screen="types" data-operate="multiply">&#215;</button>
+                            <button data-screen="types" data-operate="divide">&#247;</button>
+                        </div>
+                        <div class="number-divider">
+                            <button data-screen="types" data-operate="add">&#43;</button>
+                            <button data-screen="types" data-operate="subtract">&#8722;</button>
+                        </div>
+                        <div class="number-divider">
+                            <!-- <button data-screen="types" data-action="answer">Ans</button> -->
+                            <button data-action="equals" data-operate="equals">&#61;</button>
+                        </div>
+                    </div>
+                </section>
+            </div> 
+        </div>
     </main>
+        
 
     <footer>
         <!-- <div class="card">
