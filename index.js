@@ -52,7 +52,6 @@ let deleteButton = document.querySelector("[data-action='delete']");
 
     function backSpaceButton(event) {
         let keypress = event.key; // "Backspace" or "Delete"
-        console.log(keypress);
         if (keypress === "Backspace" || keypress === "Delete") {
             backSpace();
         }
@@ -191,22 +190,23 @@ let operatorButton = document.querySelectorAll("[data-operate]");
     }
 
     function operatesInputsPress(event) {
-        console.log(event);
+        let keypress = event.key;
+
+        let allowedKeys = ["*", "/", "+", "-", "=", "Enter"];
+        if (allowedKeys.includes(keypress)) {
+            if (keypress === "*") {
+                operatesInputs(multiplyObj);    
+            } else if (keypress === "/") {
+                operatesInputs(divideObj);
+            } else if (keypress === "+") {
+                operatesInputs(addObj);
+            } else if (keypress === "-") {
+                operatesInputs(subtractObj);
+            } else if (keypress === "=" || keypress === "Enter") {
+                operatesInputs(equalsObj);
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 let step = 1;
 function operatesInputs(event) {
@@ -446,9 +446,17 @@ function postAnswer(number) {
 
         let expRegex = /e[+-]?\d+/; // finds the "e+num" characters
         let exponential = result.match(expRegex); // this is an array
-        let powerNum = exponential[0].slice(2); //this is string
+        let powerNum;
+        if (exponential[0].slice(1)[0] === "-") {
+            powerNum = exponential[0].slice(1); //this is string
+        } else {
+            powerNum = exponential[0].slice(2); //this is string
+        }
+        // console.log(exponential[0].slice(1)[0]);
+        // let powerNum = exponential[0].slice(2); //this is string
         let newIntegerRaised = result.replace(exponential[0], `×10`); //this is string
 
+        console.log(exponential);
         answerScreen.textContent = newIntegerRaised; 
         answerExponent.textContent = powerNum;
          
