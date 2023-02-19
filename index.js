@@ -1,6 +1,6 @@
 let chain = false;
-let inputScreenLimit = 19;
-let answerScreenLimit = 12;
+const inputScreenLimit = 19;
+const answerScreenLimit = 12;
 let firstInput; //stores first input
 let secondInput; // stores the second input
 let answer; // stores answer to the operation
@@ -8,12 +8,12 @@ let lastInput; //stores the last input on screen wether a digit or operator
 let lastOperation = []; // Stores the last operator executed, except equals
 let inputNumbers = []; //stores DIGITS in an array, later used to be combined as a float/ number
 let currentOperation;
-let keylog = []; // Logs keypress, used for detecting simultaneous keypress
+let keylog = ["shiftUp"]; // Logs keypress, used for detecting simultaneous keypress
 
-let wholeCalc = document.querySelector("#whole-calc");
+const wholeCalc = document.querySelector("#whole-calc");
 
 // Number Buttons ------
-let numberButtons = document.querySelectorAll("#number-buttons button");
+const numberButtons = document.querySelectorAll("#number-buttons button");
     numberButtons.forEach(button => {
         button.addEventListener("click", (typesNumberClick));
     });
@@ -28,7 +28,7 @@ let numberButtons = document.querySelectorAll("#number-buttons button");
 
     function typesNumberButton(event) {
             let keypress = event.key;
-            let allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
+            const allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
 
         // Fires Negative Sign
         // Ensures that subtract operation only fires when shift is held down
@@ -50,13 +50,13 @@ let numberButtons = document.querySelectorAll("#number-buttons button");
                     }
             }
 
-            if (allowedNumPress.includes(keypress)) {
+            if (allowedNumPress.includes(keypress) && event.type === "keydown") {
                 typesNumber(keypress);
             }
     }       
 
 // AC ----------
-let allClearButton = document.querySelector("[data-action='all-clear']");
+const allClearButton = document.querySelector("[data-action='all-clear']");
     allClearButton.addEventListener("click", () => allClear());
 
     document.addEventListener("keydown", allClearPress);
@@ -69,7 +69,7 @@ let allClearButton = document.querySelector("[data-action='all-clear']");
     }
 
 // DEL ----------
-let deleteButton = document.querySelector("[data-action='delete']");
+const deleteButton = document.querySelector("[data-action='delete']");
     deleteButton.addEventListener("click", () => backSpace());
 
     document.addEventListener("keydown", backSpaceButton);
@@ -82,10 +82,10 @@ let deleteButton = document.querySelector("[data-action='delete']");
     }
 
 // Screens -------------
-let inputScreen = document.querySelector("#input-screen p");
-let cursor = document.querySelector("#screen-cursor");
-let answerScreen = document.querySelector("#answer-screen p");
-let answerExponent = document.querySelector("#answer-screen .exponent");
+const inputScreen = document.querySelector("#input-screen p");
+const cursor = document.querySelector("#screen-cursor");
+const answerScreen = document.querySelector("#answer-screen p");
+const answerExponent = document.querySelector("#answer-screen .exponent");
 
 function typesNumber(event) {
 // Adds pressing animation
@@ -185,7 +185,7 @@ function typesNumber(event) {
 
 // Operators ------------
 
-let operatorButton = document.querySelectorAll("[data-operate]");
+const operatorButton = document.querySelectorAll("[data-operate]");
     operatorButton.forEach(button => {
         button.addEventListener("click", operatesInputsClick);
     });
@@ -202,11 +202,11 @@ let operatorButton = document.querySelectorAll("[data-operate]");
     } 
 
     // I can code this by using the node[], but choose to keep this for readability and further features 
-    let multiplyButton = document.querySelector("#multiply");
-    let divideButton = document.querySelector("#divide");
-    let addButton = document.querySelector("#add");
-    let subtractButton = document.querySelector("#subtract");
-    let equalsButton = document.querySelector("#equals");
+    const multiplyButton = document.querySelector("#multiply");
+    const divideButton = document.querySelector("#divide");
+    const addButton = document.querySelector("#add");
+    const subtractButton = document.querySelector("#subtract");
+    const equalsButton = document.querySelector("#equals");
 
     let multiplyObj = new OperatorsBank(multiplyButton, "multiply", "×" );
     let divideObj = new OperatorsBank(divideButton, "divide", "÷" );
@@ -239,7 +239,7 @@ let operatorButton = document.querySelectorAll("[data-operate]");
     function operatesInputsPress(event) {
         let keypress = event.key;
 
-        let allowedKeys = ["*", "/", "+", "=", "Enter"]; // Subtract has special set of events
+        const allowedKeys = ["*", "/", "+", "=", "Enter"]; // Subtract has special set of events
 
 // Fires subtraction
 // Ensures that subtract operation only fires when shift is not held down
@@ -262,7 +262,7 @@ let operatorButton = document.querySelectorAll("[data-operate]");
         }
         
 // Fires other operations
-        if (allowedKeys.includes(keypress)) {
+        if (allowedKeys.includes(keypress) && event.type === "keydown") {
             if (keypress === "*") {
                 operatesInputs(multiplyObj);    
             } else if (keypress === "/") {
@@ -526,7 +526,6 @@ function runOperation(operation) {
         answer = firstInput / secondInput;
     }  
 }
-
 
 function deleteOneStep() {
     inputScreen.textContent = inputScreen.textContent.slice(0, inputScreen.textContent.length - 1);
