@@ -8,6 +8,7 @@ let lastInput; //stores the last input on screen wether a digit or operator
 let lastOperation = []; // Stores the last operator executed, except equals
 let inputNumbers = []; //stores DIGITS in an array, later used to be combined as a float/ number
 let currentOperation;
+let keylog = []; // Logs keypress, used for detecting simultaneous keypress
 
 let wholeCalc = document.querySelector("#whole-calc");
 
@@ -18,6 +19,7 @@ let numberButtons = document.querySelectorAll("#number-buttons button");
     });
 
     document.addEventListener("keydown", typesNumberButton);
+    document.addEventListener("keyup", typesNumberButton);
 
     function typesNumberClick() {
             let click = this.value;
@@ -27,6 +29,26 @@ let numberButtons = document.querySelectorAll("#number-buttons button");
     function typesNumberButton(event) {
             let keypress = event.key;
             let allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
+
+            // Fires Negative Sign
+            // Ensures that subtract operation only fires when shift is held down
+             if (keypress === "Shift" || keypress === "-") {
+            // shift press
+                if (event.type === "keydown" && keypress === "Shift") {
+                    keylog.push("shiftDown");
+                } else if (event.type === "keyup" && keypress === "Shift") {
+                    keylog.push("shiftUp");
+                }
+        
+                if (keylog.length > 1) { // Limits the keylog Array into 1(length)
+                    keylog.shift();
+                }
+    
+            // Fires the negative sign while shift is pressed
+                if (event.type === "keydown" && keypress === "-" && keylog[0] === "shiftDown") {
+                        typesNumber("-");
+                    }
+            }
 
             if (allowedNumPress.includes(keypress)) {
                 typesNumber(keypress);
@@ -114,7 +136,8 @@ function typesNumber(event) {
         return;  
      }
 
-// Sets the characteristic of pressing decimal
+
+    // Sets the characteristic of pressing decimal
     if (event === ".") {
         // Puts Zero before the decimal if there is no preceding numbers yet
         if (inputNumbers.length === 0) {
@@ -140,6 +163,22 @@ function typesNumber(event) {
     cursor.style.visibility = "visible";
     }
 
+    // Sets the characteristic of pressing negative
+    if (event === "-") {
+    // If there is already a negative, cancels input
+        let negativeFound = false;
+        if (inputNumbers.includes("-")) {
+            negativeFound = true;
+        }
+
+        if (negativeFound === true) {
+            negativeFound = false;
+            return;
+        }
+    cursor.style.visibility = "visible";
+    }
+
+
     //determines that the last input is a number and not an operator, 
     // even decimal will return NaN which is a number data type
     lastInput = parseFloat(event); 
@@ -156,6 +195,7 @@ let operatorButton = document.querySelectorAll("[data-operate]");
     });
 
     document.addEventListener("keydown", operatesInputsPress);
+    document.addEventListener("keyup", operatesInputsPress);
 
     let operatorsArr = [];
     function OperatorsBank (button, operation, textContent) {
@@ -200,10 +240,33 @@ let operatorButton = document.querySelectorAll("[data-operate]");
         }
     }
 
+
     function operatesInputsPress(event) {
         let keypress = event.key;
 
-        let allowedKeys = ["*", "/", "+", "-", "=", "Enter"];
+        let allowedKeys = ["*", "/", "+", "=", "Enter"]; // Subtract has special set of events
+
+// Fires subtraction
+// Ensures that subtract operation only fires when shift is not held down
+        if (keypress === "Shift" || keypress === "-") {
+        // shift press
+            if (event.type === "keydown" && keypress === "Shift") {
+                keylog.push("shiftDown");
+            } else if (event.type === "keyup" && keypress === "Shift") {
+                keylog.push("shiftUp");
+            }
+    
+            if (keylog.length > 1) { // Limits the keylog Array into 1(length)
+                keylog.shift();
+            }
+
+        // subtract sign press
+            if (event.type === "keydown" && keypress === "-" && keylog[0] === "shiftUp") {
+                    operatesInputs(subtractObj);
+                }
+        }
+        
+// Fires other operations
         if (allowedKeys.includes(keypress)) {
             if (keypress === "*") {
                 operatesInputs(multiplyObj);    
@@ -211,13 +274,12 @@ let operatorButton = document.querySelectorAll("[data-operate]");
                 operatesInputs(divideObj);
             } else if (keypress === "+") {
                 operatesInputs(addObj);
-            } else if (keypress === "-") {
-                operatesInputs(subtractObj);
             } else if (keypress === "=" || keypress === "Enter") {
                 operatesInputs(equalsObj);
             }
-        }
+        }  
     }
+
 
 let step = 1;
 function operatesInputs(event) {
