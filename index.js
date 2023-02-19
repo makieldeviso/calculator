@@ -1,4 +1,6 @@
 let chain = false;
+let inputScreenLimit = 19;
+let answerScreenLimit = 12;
 let firstInput; //stores first input
 let secondInput; // stores the second input
 let answer; // stores answer to the operation
@@ -75,10 +77,15 @@ function typesNumber(event) {
         cursor.classList.remove("limit");
     }
      
-// Does not work if last last answer was exponent, large number 
+// Does not work if last answer was exponent, large number 
     if (answerExponent.textContent.length > 0) {
-        inputScreen.textContent = "Big Integer [AC]: Cancel"
+        inputScreen.textContent = "Memory Full [AC]: Cancel"
         return;
+    } else if (answer != undefined) {
+        if (answer.toString().length > inputScreenLimit) {
+            inputScreen.textContent = "Memory Full [AC]: Cancel"
+            return; 
+        }
     }
 
 // Resets calculator after pressing a number upon Math ERROR
@@ -87,7 +94,7 @@ function typesNumber(event) {
         // allClear();
     }
 
-// User stops the operation chain by typing new set of operands
+// User stops the operation chain by typing new set of operands(numbers) from last equals operation
     if (lastInput === "equals") {
         chain = false;
         firstInput = undefined;
@@ -95,14 +102,14 @@ function typesNumber(event) {
         inputScreen.textContent = "";
         answerScreen.textContent = "";
         answerExponent.textContent = "";
-        cursor.style.visibility = "visible";
-        step = 1;
+        cursor.style.visibility = "visible"; 
         inputNumbers = [];
         lastOperation = [];
+        step = 1;
     }
 
-// Limits the screen input to 18 characters
-    if (inputScreen.textContent.length === 18) {
+// Limits the screen input  characters
+    if (inputScreen.textContent.length === inputScreenLimit) {
         cursor.classList.add("limit");
         return;  
      }
@@ -117,12 +124,16 @@ function typesNumber(event) {
         } else {
             // If there is already a decimal, cancels input
             let decimalFound = false;
+            // console.log(decimalFound);
 
             if (inputNumbers.includes(".")) {
                 decimalFound = true;
             }
 
             if (decimalFound === true) {
+                console.log(inputNumbers);
+                decimalFound = false;
+                console.log(decimalFound);
                 return;
             }
         }
@@ -220,10 +231,10 @@ function operatesInputs(event) {
         cursor.classList.remove("limit");
     }
 
-// Limits the screen input to 18 characters
+// Limits the screen input characters
     let continueOperation = false;
     cursor.style.visibility = "visible";
-    if (inputScreen.textContent.length === 18) {
+    if (inputScreen.textContent.length === inputScreenLimit) {
         let screenChar = [...inputScreen.textContent];
         cursor.classList.add("limit");
 
@@ -242,9 +253,15 @@ function operatesInputs(event) {
 
 // Does not work if last answer was exponent, large number 
     if (answerExponent.textContent.length > 0) {
-        inputScreen.textContent = "Big Integer [AC]: Cancel"
+        inputScreen.textContent = "Memory Full [AC]: Cancel"
         cursor.style.visibility = "hidden";
         return;
+    } else if (answer != undefined) {
+        if (answer.toString().length > inputScreenLimit) {
+            inputScreen.textContent = "Memory Full [AC]: Cancel"
+            cursor.style.visibility = "hidden";
+            return; 
+        }
     }
 
 //  Does not work on Math ERROR and Syntax ERROR, requires AC
@@ -441,9 +458,23 @@ function postAnswer(number) {
     let decimalPlaces = stringAnswer.length - decimalIndex;
     let wholeNumbers = decimalIndex; // Assign to new variable to be readable
 
-     if (stringAnswer.length > 12) {
-        result = number.toExponential(6); //this is string, convert large number to exponential
+// Handles long numbers with short whole numbers but long decimal places
+    if (stringAnswer.length > answerScreenLimit && wholeNumbers < 5 && decimalPlaces > 0) {
+        let result;
+        if (wholeNumbers < answerScreenLimit) {
+            result = number.toFixed(answerScreenLimit - wholeNumbers);
+        } else {
+            result = number.toFixed(wholeNumbers - answerScreenLimit);
+        }
 
+        answer = parseFloat(result); // Added for consistency in chaining operations
+        answerScreen.textContent = result;
+
+// Handles large numbers with integers greater than 5 digits
+    } else if (stringAnswer.length > answerScreenLimit) { 
+        console.log(number);
+        let result = number.toExponential(8); //this is string, convert large number to exponential
+        console.log(result);
         let expRegex = /e[+-]?\d+/; // finds the "e+num" characters
         let exponential = result.match(expRegex); // this is an array
         let powerNum;
@@ -452,8 +483,7 @@ function postAnswer(number) {
         } else {
             powerNum = exponential[0].slice(2); //this is string
         }
-        // console.log(exponential[0].slice(1)[0]);
-        // let powerNum = exponential[0].slice(2); //this is string
+
         let newIntegerRaised = result.replace(exponential[0], `×10`); //this is string
 
         console.log(exponential);
@@ -524,7 +554,7 @@ function backSpace() {
     }
 
 // detect if the last character deleted is an operator and reset user input to step 1
-    if (parseFloat(lastChar).toString() === "NaN") {
+    if (parseFloat(lastChar).toString() === "NaN" && lastChar != "." && lastChar != "-") {
         chain = false;
         lastOperation = [];
         currentOperation = undefined;
