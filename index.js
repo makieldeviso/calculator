@@ -30,8 +30,8 @@ let numberButtons = document.querySelectorAll("#number-buttons button");
             let keypress = event.key;
             let allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
 
-            // Fires Negative Sign
-            // Ensures that subtract operation only fires when shift is held down
+        // Fires Negative Sign
+        // Ensures that subtract operation only fires when shift is held down
              if (keypress === "Shift" || keypress === "-") {
             // shift press
                 if (event.type === "keydown" && keypress === "Shift") {
@@ -145,18 +145,14 @@ function typesNumber(event) {
             lastInput = 0;             // Save additional zero to avoid problem in DEL
             inputScreen.textContent += "0";
         } else {
-            // If there is already a decimal, cancels input
+            // If there is already a decimal, cancels input of another 
             let decimalFound = false;
-            // console.log(decimalFound);
-
             if (inputNumbers.includes(".")) {
                 decimalFound = true;
             }
 
-            if (decimalFound === true) {
-                console.log(inputNumbers);
+            if (decimalFound === true) { 
                 decimalFound = false;
-                console.log(decimalFound);
                 return;
             }
         }
@@ -179,7 +175,7 @@ function typesNumber(event) {
     }
 
 
-    //determines that the last input is a number and not an operator, 
+    // Determines that the last input is a number and not an operator, 
     // even decimal will return NaN which is a number data type
     lastInput = parseFloat(event); 
     cursor.style.visibility = "visible";
@@ -239,7 +235,6 @@ let operatorButton = document.querySelectorAll("[data-operate]");
                 break;
         }
     }
-
 
     function operatesInputsPress(event) {
         let keypress = event.key;
@@ -493,6 +488,34 @@ lastInput = operation; // Ensures that the operation is saved as last input
 }
 
 function runOperation(operation) {
+// Check for Syntax Error
+    let negRegex = /[-]/g;
+    let numRegex = /[0-9]/;
+
+    let isSyntaxError = [];
+    let screenInputArr = inputScreen.textContent.split("");
+    let lastIndex = 0; // records the last index of the found "-"
+    screenInputArr.forEach(char => {
+        if (char === "-") {
+            let charIndex = screenInputArr.indexOf(char, lastIndex);
+            lastIndex = charIndex + 1;
+            if (charIndex != 0) {
+                if (numRegex.test(screenInputArr[charIndex - 1]) === false) {
+                    isSyntaxError.push(false);
+                } else {
+                    isSyntaxError.push(true);
+                }
+            }
+        } 
+    });
+
+ if (isSyntaxError.includes(true)) {
+    answer = "Syntax ERROR";
+    return;
+ }
+    
+
+// Continue operation
     if(operation === "add") {
         answer = firstInput + secondInput;
     } else if (operation === "subtract") {
@@ -534,9 +557,7 @@ function postAnswer(number) {
 
 // Handles large numbers with integers greater than 5 digits
     } else if (stringAnswer.length > answerScreenLimit) { 
-        console.log(number);
         let result = number.toExponential(8); //this is string, convert large number to exponential
-        console.log(result);
         let expRegex = /e[+-]?\d+/; // finds the "e+num" characters
         let exponential = result.match(expRegex); // this is an array
         let powerNum;
@@ -548,13 +569,17 @@ function postAnswer(number) {
 
         let newIntegerRaised = result.replace(exponential[0], `×10`); //this is string
 
-        console.log(exponential);
         answerScreen.textContent = newIntegerRaised; 
         answerExponent.textContent = powerNum;
          
     } else if (number === Infinity || number === -Infinity || number.toString() === "NaN" ) {
         answerScreen.textContent = "Math ERROR";
         inputScreen.textContent = "[AC] : Cancel"
+
+    } else if (number === "Syntax ERROR") {
+        answerScreen.textContent = "Syntax ERROR";
+        inputScreen.textContent = "[AC] : Cancel"
+
     } else {
         answerScreen.textContent = answer;
     }
@@ -592,7 +617,7 @@ function backSpace() {
     let inputScreenText = inputScreen.textContent;
     let lastChar = inputScreenText.slice(inputScreenText.length - 1);
 
-    // Adds pressing animation
+// Adds pressing animation
     setTimeout(() => {
         deleteButton.classList.toggle("pressed");
     },100);
