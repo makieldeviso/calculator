@@ -667,3 +667,29 @@ function backSpace() {
         lastInput = parseFloat(inputScreen.textContent[inputScreen.textContent.length - 1]);
     }
 }
+
+
+const infoButton = document.querySelector(".info");
+    infoButton.addEventListener("click", flipCalc);
+
+const frontButton = document.querySelector(".back-to-calc");
+    frontButton.addEventListener("click", flipCalc);
+
+const calcContainer = document.querySelector("#calc-flipper");
+
+function flipCalc() {
+        // calcContainer.classList.add("flip");
+        // console.log(this);
+
+        if (this.dataset.front === "front") {
+            calcContainer.classList.remove("flip");
+            calcContainer.classList.add("reverse");
+        } else  {
+            if (calcContainer.hasAttribute("class")) {
+                calcContainer.removeAttribute("class")
+                calcContainer.classList.add("flip");
+            } else {
+                calcContainer.classList.add("flip");
+            }
+        }
+    }   

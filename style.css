@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Lora:ital@1&family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Lora:ital@1&family=Montserrat&family=Roboto:wght@300&display=swap');
 
 * {
     padding: 0;
@@ -19,20 +19,24 @@ footer {
     height: 5vh;
 }
 
-#whole-calc, #calc-back {
-    width: 80vw;
-    margin: auto;
-    height: 92vh;
+#calc-flipper {
     max-width: 570px;
     min-width: 570px;
+    min-height: 660px;
+    margin: auto;
+}
+
+#whole-calc, #calc-back {
+    width: 100%;
+    height: 92vh;
     border-radius: 10px 10px 50px 50px;
-    box-shadow: 0 0 10px 2px#4B6587;
+    box-shadow: 0 0 10px 2px #45707f;
     background-image: url('./images/motherboard.png');
     background-position: center;
     background-size: cover;
 }
 
-.head {
+.head, .info-head {
     margin: auto;
     padding: 10px;
     width: 100%;
@@ -48,12 +52,13 @@ footer {
     display: flex;
 }
 
-#brand-text {
+#brand-text, #back-heading {
     display: flex;
     flex-direction: column;
     width: 70%;
+    
 }
-#brand-text h1 {
+#brand-text h1, #back-heading h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5rem;
     letter-spacing: 0.3rem;
@@ -67,11 +72,11 @@ footer {
     color: #394867;
 }
 
-#info {
+#info, #info-back {
     width: 30%;
 }
 
-.clickable {
+.clickable, .clickable-back {
     width: 100%;
     height: 100%;
     text-align: center;
@@ -80,7 +85,7 @@ footer {
     align-items: center;
     
 }
-.clickable img {
+.clickable img, .clickable-back img {
     width: 45%;
     height: auto;
     flex:0 0 auto;
@@ -88,24 +93,25 @@ footer {
     box-shadow: inset 0 0 8px #537FE7;
 }
 
-.clickable {
+.clickable, .clickable-back {
     pointer-events: none;
 }
-.clickable:hover {
+.clickable:hover, .clickable-back:hover {
     background-image: url("./images/techno-circle.gif");
     background-size: 9rem;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.clickable .info{
+.clickable .info, .clickable-back .back-to-calc {
     pointer-events: auto;
 }
 
-.clickable .info:hover {
+.clickable .info:hover, .clickable-back .back-to-calc:hover {
     transform: scale(1.1);
     box-shadow: none;
 }
+
 
 #calculator-body {
     margin: auto;
@@ -305,38 +311,180 @@ button#del, button#ac {
     background-color: #232d3f;
     animation: blink 2s infinite;
 }
+/* calculator back */
+
+
+
+
+
+
+
 
 
 
 
 
 /* flip */
+#calc-flipper {
+    transition: all 1s ease;
+  }
 
-/* main {
-    width: max-content;
-} */
-
-main .calc-container.flip {
-    position: relative;
+#calc-flipper.flip {
     transform-style: preserve-3d;
     transform: rotateY(180deg);
-    transition: all 0.6s ease;
+    transition: all 1s ease;
+    position: relative;
 }
 
+#calc-flipper.reverse {
+    transform-style: preserve-3d;
+    transform: rotateY(-180deg);
+    transition: all 1s ease;
+    position: relative;
+}
+
+
 #whole-calc, #calc-back {
-    width: max-content;
     backface-visibility: hidden;
 }
 
 #calc-back {
     position: absolute;
+    margin: auto;
     top: 0;
     left: 0;
+    transform: rotateY(180deg);
+}
+
+#calc-flipper:not(.flip) {
+    transform: rotateY(0deg);
 }
 
 
+.info-at-back {
+    background: linear-gradient(
+        rgba(51, 66, 87, 95%),
+        rgba(71, 96, 114, 90%),
+        #548CA8);
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 10px 50px 50px;
+    
+}
 
-#calc-back {
-    transform: rotateY(180deg);
+.info-main {
+    width: 100%;
+    height: 100%;
+}
+
+.info-head {
+    background: none;
+    border-top: 10px solid #2c3644;
+    border-right: 10px solid #548CA8;
+    border-left: 10px solid #548CA8;
+}
+
+
+.clickable-back img{
+    width: 40%;
+}
+
+div#back-heading {
+    justify-content: center;
+}
+
+#back-heading h1, #back-heading p  {
+    color:#E8F0F2;
+    text-shadow: 0 0 10px #798f97;
+}
+#back-heading p {
+    padding-left: 10px;
+}
+
+
+.info-body {
+    width: 100%;
+    height: 80%;
+    border-right: 10px solid #548CA8;
+    border-left: 10px solid #548CA8;
+    border-bottom: 10px solid #76a2b8;
+    border-radius: 0 0 50px 50px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-body h3, .info-body li {
+    font-size: 1.5rem;
+    color:#E8F0F2;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 0 0 10px #485255;
+}
+
+
+.info-body h3 {
+    margin: 8px;
+}
+
+.info-body ul{
+    list-style-type: circle;
+}
+
+.info-body li {
+    color:#E8F0F2;
+    font-size: 0.9rem;
+    margin-left: 30px;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px #dae9ee;
+    text-shadow: 0 0 10px #798f97;
+    width: 85%;
+}
+
+.key-mapping li {
+    font-size: 1rem;
+}
+
+.footer {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.footer p {
+    font-size: 1.1rem;
+    color:#E8F0F2;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 0 0 10px #485255;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.footer a:visited {
+    color:#E8F0F2;
+}
+
+.footer a:hover {
+    color: #d4bf92;
+}
+.footer a:active {
+    color: #E8F0F2;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+    background-image: url("./images/background.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 100%;
+    filter: brightness(50%);
 }
 
