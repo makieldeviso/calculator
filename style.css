@@ -6,17 +6,14 @@
     box-sizing: border-box;
 }
 
-main, footer  {
+main {
     width: 80vw;
     margin: auto;
 }
 
 main {
-    height: 95vh;
-    padding: 10px;
-}
-footer {
-    height: 5vh;
+    height: 100vh;
+    padding: 30px;
 }
 
 #calc-flipper {
@@ -83,8 +80,8 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
+
 .clickable img, .clickable-back img {
     width: 45%;
     height: auto;
@@ -93,12 +90,9 @@ footer {
     box-shadow: inset 0 0 8px #537FE7;
 }
 
-.clickable, .clickable-back {
-    pointer-events: none;
-}
 .clickable:hover, .clickable-back:hover {
     background-image: url("./images/techno-circle.gif");
-    background-size: 9rem;
+    background-size: 95%;
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -256,6 +250,10 @@ section#screen {
     box-shadow: 0 0 5px 1px#4B6587; 
 }
 
+#operators #add {
+    height: 215%;
+}
+
 #operators button {
     background: radial-gradient(circle, #4B6587, #576c88, #4B6587);
     color: #F7F6F2;
@@ -280,8 +278,6 @@ button#del, button#ac {
 #number-buttons button:hover, #operators button:hover {
     filter: brightness(90%);
 }
-
-
 
 #operators {
     width: 40%;
@@ -311,20 +307,8 @@ button#del, button#ac {
     background-color: #232d3f;
     animation: blink 2s infinite;
 }
-/* calculator back */
 
-
-
-
-
-
-
-
-
-
-
-
-/* flip */
+/* flip (start)*/
 #calc-flipper {
     transition: all 1s ease;
   }
@@ -343,7 +327,6 @@ button#del, button#ac {
     position: relative;
 }
 
-
 #whole-calc, #calc-back {
     backface-visibility: hidden;
 }
@@ -359,6 +342,7 @@ button#del, button#ac {
 #calc-flipper:not(.flip) {
     transform: rotateY(0deg);
 }
+/* flip (end) */
 
 
 .info-at-back {
@@ -409,7 +393,7 @@ div#back-heading {
     border-left: 10px solid #548CA8;
     border-bottom: 10px solid #76a2b8;
     border-radius: 0 0 50px 50px;
-    padding: 10px;
+    padding: 0 10px 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -424,7 +408,7 @@ div#back-heading {
 
 
 .info-body h3 {
-    margin: 8px;
+    margin: 0 8px 8px;
 }
 
 .info-body ul{
@@ -445,19 +429,24 @@ div#back-heading {
     font-size: 1rem;
 }
 
+.button-key {
+    display: inline-block;
+    width: 30%;
+}
+
 .footer {
-    margin-top: 15px;
+    margin-top: 8px;
     text-align: center;
 }
 
-.footer p {
+.footer p, footer p {
     font-size: 1.1rem;
     color:#E8F0F2;
     font-family: 'Roboto', sans-serif;
     text-shadow: 0 0 10px #485255;
 }
 
-.footer a {
+.footer a{
     text-decoration: none;
 }
 
@@ -485,6 +474,17 @@ body::before {
     background-repeat: no-repeat;
     background-position: center;
     opacity: 100%;
-    filter: brightness(50%);
 }
 
+@media only screen and (width < 830px) {
+    main {
+        width: 100vw;
+    }
+
+    /* #calc-flipper {
+        max-width: 800px;
+        min-width: none;
+        width: 95%;
+    } */
+
+}

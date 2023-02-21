@@ -24,7 +24,7 @@
         
                      <div id="info">
                         <div class="clickable">
-                            <img class="info" src="./images/information.png" alt="clickable information icon">
+                            <img class="info" src="./images/information.png" alt="clickable information icon" data-back="back">
                         </div>
                     </div>
         
@@ -79,7 +79,6 @@
                                 <button id="subtract" data-screen="types" data-operate="subtract">&#8722;</button>
                             </div>
                                 <div class="number-divider">
-                                <!-- <button data-screen="types" data-action="answer">Ans</button> -->
                                 <button id="equals" data-action="equals" data-operate="equals">&#61;</button>
                             </div>
                         </div>
@@ -108,10 +107,26 @@
                             <div class="key-mapping">
                                 <h3>KEY MAPPING</h3>
                                 <ul>
-                                    <li>DEL <i class="fa-solid fa-arrow-right"></i> Backspace | Delete</li>
-                                    <li>AC <i class="fa-solid fa-arrow-right"></i> Esc | End</li>
-                                    <li>EQUAL <i class="fa-solid fa-arrow-right"></i> Enter </li>
-                                    <li>NEGATIVE ( - ) <i class="fa-solid fa-arrow-right"></i>  Shift + [ - ] </li>
+                                    <li class="keymap">
+                                        <span class="button-key">DEL </span>
+                                        <span class="mapping"><i class="fa-solid fa-arrow-right"></i> Backspace | Delete</span>
+                                    </li>
+                                    <li class="keymap">
+                                        <span class="button-key">AC </span>
+                                        <span class="mapping"><i class="fa-solid fa-arrow-right"></i> Esc | End</span>
+                                    </li>
+                                    <li class="keymap">
+                                        <span class="button-key">EQUAL </span>
+                                        <span class="mapping"><i class="fa-solid fa-arrow-right"></i> Enter </span>
+                                    </li>
+                                    <li class="keymap">
+                                        <span class="button-key">NEGATIVE ( - ) </span>
+                                        <span class="mapping"><i class="fa-solid fa-arrow-right"></i>  Shift + [ - ] </span>
+                                    </li>
+                                    <li class="keymap">
+                                        <span class="button-key">INFO/CALC FLIP </span>
+                                        <span class="mapping"><i class="fa-solid fa-arrow-right"></i>  PgUp | PgDn | I </span>
+                                    </li>
                                     <li>Numbers and operators can be accessed through the numpad <br>and number row keys</li>
                                 </ul>
                             </div>
@@ -139,14 +154,6 @@
             </div>
         </div>
     </main>
-        
-
-    <footer>
-        <!-- <div class="card">
-            <div class="card-front">Front</div>
-            <div class="card-back">Back</div>
-        </div> -->
-    </footer>
     
 </body>
 </html>

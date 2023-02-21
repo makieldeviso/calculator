@@ -677,19 +677,50 @@ const frontButton = document.querySelector(".back-to-calc");
 
 const calcContainer = document.querySelector("#calc-flipper");
 
-function flipCalc() {
-        // calcContainer.classList.add("flip");
-        // console.log(this);
+document.addEventListener("keydown", flipCalcPress);
 
-        if (this.dataset.front === "front") {
+function flipCalcPress(event) {
+    let keypress = event.code;
+    let allowedPress = ["PageUp", "PageDown", "KeyI"];
+    
+    if (allowedPress.includes(keypress)) {
+        flipCalc(event);
+    }
+}
+
+let faceStatus = "front";
+function flipCalc(event) {
+
+    if (event.type === "click") {
+        if (this.dataset.front === "front") { //from back to front
             calcContainer.classList.remove("flip");
             calcContainer.classList.add("reverse");
-        } else  {
+            faceStatus = "front";
+        } else if ((this.dataset.back === "back")){ // front to back
             if (calcContainer.hasAttribute("class")) {
                 calcContainer.removeAttribute("class")
                 calcContainer.classList.add("flip");
             } else {
                 calcContainer.classList.add("flip");
             }
+            faceStatus = "back";
         }
-    }   
+
+    } else if (event.type === "keydown") {
+
+        if (faceStatus === "back") {
+            calcContainer.classList.remove("flip");
+            calcContainer.classList.add("reverse");
+            faceStatus = "front";
+
+        } else if (faceStatus === "front") {
+            if (calcContainer.hasAttribute("class")) {
+                calcContainer.removeAttribute("class")
+                calcContainer.classList.add("flip");
+            } else {
+                calcContainer.classList.add("flip");
+            }
+            faceStatus = "back";
+        } 
+    }
+}   
