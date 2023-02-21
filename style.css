@@ -19,13 +19,13 @@ main {
 #calc-flipper {
     max-width: 570px;
     min-width: 570px;
-    min-height: 660px;
+    height: 100%;
     margin: auto;
 }
 
 #whole-calc, #calc-back {
     width: 100%;
-    height: 92vh;
+    height: 100%;
     border-radius: 10px 10px 50px 50px;
     box-shadow: 0 0 10px 2px #45707f;
     background-image: url('./images/motherboard.png');
@@ -106,7 +106,6 @@ main {
     box-shadow: none;
 }
 
-
 #calculator-body {
     margin: auto;
     padding: 0 20px 10px;
@@ -121,14 +120,14 @@ main {
 }
 
 
-@media only screen  and (width < 1300px) {
+/* @media only screen  and (width < 1300px) {
     main, header {
         width: 100vw;
     }
     #calculator-body {
         width: 100%;
     }
-}
+} */
 
 section#screen {
     border-top: 8px solid #a8aaac;
@@ -151,12 +150,13 @@ section#screen {
 .input-screen-container {
     display: flex;
     align-items: center;
+    font-size: 40%;
     gap: 2px;
 }
 
 #input-screen {
     width: max-content;
-    height: 3rem;
+    height: 100%;
 }
 
 #answer-screen {
@@ -164,10 +164,10 @@ section#screen {
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    height: 4.2rem; 
+    height: 60%; 
 }
 #answer-screen .exponent {
-    height: 4.2rem; 
+    height: 100%; 
     font-size: 2rem;
     font-family: 'Lato', sans-serif;
     text-align: right;
@@ -175,7 +175,7 @@ section#screen {
 }
 
 #screen-cursor {
-    height: 2rem;
+    height: 100%;
     width: 5px;
     background-color: #394867;
     animation: blink 1s infinite;
@@ -303,7 +303,7 @@ button#del, button#ac {
 }
 
 #screen-cursor.limit {
-    width: 15px;
+    width: 10px;
     background-color: #232d3f;
     animation: blink 2s infinite;
 }
@@ -379,7 +379,7 @@ div#back-heading {
 
 #back-heading h1, #back-heading p  {
     color:#E8F0F2;
-    text-shadow: 0 0 10px #798f97;
+    text-shadow: 0 0 10px #212324;
 }
 #back-heading p {
     padding-left: 10px;
@@ -403,7 +403,7 @@ div#back-heading {
     font-size: 1.5rem;
     color:#E8F0F2;
     font-family: 'Roboto', sans-serif;
-    text-shadow: 0 0 10px #485255;
+    text-shadow: 0 0 10px #212324;
 }
 
 
@@ -420,8 +420,7 @@ div#back-heading {
     font-size: 0.9rem;
     margin-left: 30px;
     margin-bottom: 5px;
-    text-shadow: 0 0 10px #dae9ee;
-    text-shadow: 0 0 10px #798f97;
+    text-shadow: 0 0 10px #212324;
     width: 85%;
 }
 
@@ -476,15 +475,323 @@ body::before {
     opacity: 100%;
 }
 
-@media only screen and (width < 830px) {
+@media (min-width: 370px) and (min-height: 660px ) {
     main {
         width: 100vw;
+        padding: 30px 10px 20px;
     }
 
-    /* #calc-flipper {
-        max-width: 800px;
-        min-width: none;
-        width: 95%;
-    } */
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 85%;
+        width: 100%;
+    }
 
+    section#screen {
+        border-top: 5px solid #a8aaac;
+        border-right: 10px solid #c7cbce;
+        border-left: 10px solid #c7cbce;
+        border-bottom: 15px solid #d0d5d8;
+    }
+    #calculator-body {
+        padding: 0 10px 10px;
+    }
+
+    #input-screen p {
+        font-size: 1.5rem;
+    }
+    
+    #answer-screen p {
+        font-size: 2rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 1.5rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 2rem;
+    }
+
+    button#del, button#ac {
+        font-size: 1.2rem;
+    }
+
+    #back-heading h1 {
+        font-size: 1.8rem;
+    }
+    #back-heading p {
+        font-size: 0.9rem;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 48%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 100%;
+    }
+
+    .info-body {
+        gap: 5px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 0.8rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 2px;
+    }
+
+    .footer p, footer p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 410px) and (min-height: 890px ) {
+    main {
+        width: 100vw;
+        padding: 30px 10px 20px;
+    }
+
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 80%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 5px solid #a8aaac;
+        border-right: 10px solid #c7cbce;
+        border-left: 10px solid #c7cbce;
+        border-bottom: 15px solid #d0d5d8;
+    }
+    #calculator-body {
+        padding: 0 10px 10px;
+    }
+
+    #input-screen p {
+        font-size: 1.7rem;
+    }
+    
+    #answer-screen p {
+        font-size: 2.3rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 1.8rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 2rem;
+    }
+
+    button#del, button#ac {
+        font-size: 1.2rem;
+    }
+
+    #back-heading h1 {
+        font-size: 2.1rem;
+    }
+    #back-heading p {
+        font-size: 1rem;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 60%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 130%;
+    }
+
+    .info-body {
+        gap: 8px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 1rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 2px;
+    }
+
+    .footer p, footer p {
+        font-size: 1rem;
+    }
+
+}
+
+@media (min-width: 380px) and (min-height: 840px ) {
+    main {
+        width: 100vw;
+        padding: 30px 10px 20px;
+    }
+
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 80%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 5px solid #a8aaac;
+        border-right: 10px solid #c7cbce;
+        border-left: 10px solid #c7cbce;
+        border-bottom: 15px solid #d0d5d8;
+    }
+    #calculator-body {
+        padding: 0 10px 10px;
+    }
+
+    #input-screen p {
+        font-size: 1.5rem;
+    }
+    
+    #answer-screen p {
+        font-size: 2.1rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 1.6rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 2rem;
+    }
+
+    button#del, button#ac {
+        font-size: 1.2rem;
+    }
+
+    #back-heading h1 {
+        font-size: 2.1rem;
+    }
+    #back-heading p {
+        font-size: 1rem;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 60%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 130%;
+    }
+
+    .info-body {
+        gap: 8px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 0.9rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 2px;
+    }
+
+    .footer p, footer p {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 350px) and (min-height: 720px ) {
+    main {
+        width: 100vw;
+        padding: 30px 10px 20px;
+    }
+
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 80%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 5px solid #a8aaac;
+        border-right: 10px solid #c7cbce;
+        border-left: 10px solid #c7cbce;
+        border-bottom: 15px solid #d0d5d8;
+    }
+    #calculator-body {
+        padding: 0 10px 10px;
+    }
+
+    #input-screen p {
+        font-size: 1.4rem;
+    }
+    
+    #answer-screen p {
+        font-size: 2rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 1.5rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 2rem;
+    }
+
+    button#del, button#ac {
+        font-size: 1.2rem;
+    }
+
+    #back-heading h1 {
+        font-size: 1.8rem;
+    }
+    #back-heading p {
+        font-size: 0.9rem;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 60%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 130%;
+    }
+
+    .info-body {
+        gap: 8px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 0.8rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 2px;
+    }
+
+    .footer p, footer p {
+        font-size: 0.9rem;
+    }
 }
