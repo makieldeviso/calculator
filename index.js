@@ -174,7 +174,6 @@ function typesNumber(event) {
     cursor.style.visibility = "visible";
     }
 
-
     // Determines that the last input is a number and not an operator, 
     // even decimal will return NaN which is a number data type
     lastInput = parseFloat(event); 
@@ -274,7 +273,6 @@ const operatorButton = document.querySelectorAll("[data-operate]");
             }
         }  
     }
-
 
 let step = 1;
 function operatesInputs(event) {
@@ -514,7 +512,6 @@ function runOperation(operation) {
     return;
  }
     
-
 // Continue operation
     if(operation === "add") {
         answer = firstInput + secondInput;

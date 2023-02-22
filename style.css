@@ -468,8 +468,100 @@ body::before {
 
 /* @media screen (start) ------------------------------ */
 
+@media (min-width: 270px) and (max-width: 280px) and (min-height: 650px) {
+    main {
+        width: 100vw;
+        padding: 15px 5px 5px;
+    }
 
-@media (min-width: 370px) and (max-width: 380px) {
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 85%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 5px solid #a8aaac;
+        border-right: 10px solid #c7cbce;
+        border-left: 10px solid #c7cbce;
+        border-bottom: 15px solid #d0d5d8;
+    }
+
+    #calculator-body {
+        padding: 0 5px 20px;
+    }
+
+    #input-screen p {
+        font-size: 1.1rem;
+    }
+    
+    #answer-screen p {
+        font-size: 1.5rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 1.2rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 1.5rem;
+    }
+
+    button#del, button#ac {
+        font-size: 0.8rem;
+    }
+
+    #operators #add {
+        height: 215%;
+    }
+
+    #brand-text h1, #back-heading h1 {
+        font-size: 1.2rem;
+    }
+
+    #brand-text h2 {
+        font-size: 0.8rem; 
+    }
+
+    #back-heading p {
+        font-size: 0.7rem;
+        margin-bottom: 5px;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 60%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 130%;
+    }
+
+    .info-body {
+        gap: 5px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 0.7rem;
+        margin-left: 2px;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 4px;
+        margin-left: 7px;
+    }
+
+    .footer p {
+        font-size: 0.8rem;
+    }
+
+
+@media (min-width: 370px) and (max-width: 380px) and (min-height: 660px) {
     main {
         width: 100vw;
         padding: 30px 10px 20px;
