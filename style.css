@@ -9,6 +9,7 @@
 main {
     width: 80vw;
     margin: auto;
+
 }
 
 main {
@@ -119,15 +120,6 @@ main {
     border-radius: 0 0 50px 50px;
 }
 
-
-/* @media only screen  and (width < 1300px) {
-    main, header {
-        width: 100vw;
-    }
-    #calculator-body {
-        width: 100%;
-    }
-} */
 
 section#screen {
     border-top: 8px solid #a8aaac;
@@ -385,7 +377,6 @@ div#back-heading {
     padding-left: 10px;
 }
 
-
 .info-body {
     width: 100%;
     height: 80%;
@@ -475,7 +466,10 @@ body::before {
     opacity: 100%;
 }
 
-@media (min-width: 370px) and (min-height: 660px ) {
+/* @media screen (start) ------------------------------ */
+
+
+@media (min-width: 370px) and (max-width: 380px) {
     main {
         width: 100vw;
         padding: 30px 10px 20px;
@@ -555,7 +549,7 @@ body::before {
     }
 }
 
-@media (min-width: 410px) and (min-height: 890px ) {
+@media (min-width: 410px) and (max-width: 415px){
     main {
         width: 100vw;
         padding: 30px 10px 20px;
@@ -636,7 +630,7 @@ body::before {
 
 }
 
-@media (min-width: 380px) and (min-height: 840px ) {
+@media (min-width: 380px) and (max-width: 400px) {
     main {
         width: 100vw;
         padding: 30px 10px 20px;
@@ -716,7 +710,7 @@ body::before {
     }
 }
 
-@media (min-width: 350px) and (min-height: 720px ) {
+@media (min-width: 350px) and (max-width: 370px){
     main {
         width: 100vw;
         padding: 30px 10px 20px;
@@ -795,3 +789,361 @@ body::before {
         font-size: 0.9rem;
     }
 }
+@media (min-width: 700px){
+    main {
+        width: 100vw;
+        padding: 30px 30px 20px;
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 815px) and (min-height: 1090px){
+    main {
+        width: 100vw;
+        padding: 30px 30px 20px;
+    }
+
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 95%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 10px solid #a8aaac;
+        border-right: 15px solid #c7cbce;
+        border-left: 15px solid #c7cbce;
+        border-bottom: 20px solid #d0d5d8;
+    }
+
+    #calculator-body {
+        padding: 0 20px 20px;
+    }
+
+    #input-screen p {
+        font-size: 3.5rem;
+    }
+    
+    #answer-screen p {
+        font-size: 4.5rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 3.5rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 3.5rem;
+    }
+
+    button#del, button#ac {
+        font-size: 2.5rem;
+    }
+
+    #brand-text h1, #back-heading h1 {
+        font-size: 4.5rem;
+    }
+
+    #brand-text h2 {
+        font-size: 2rem; 
+    }
+
+    #back-heading p {
+        font-size: 2rem;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 50%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 110%;
+    }
+
+    .info-body {
+        gap: 15px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 1.7rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 4px;
+    }
+
+    .footer p {
+        font-size: 1.8rem;
+    }
+} 
+
+@media (min-width: 760px) and (max-width: 770px) and (min-height: 1020px){
+    main {
+        width: 100vw;
+        padding: 30px 30px 20px;
+    }
+
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 95%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 10px solid #a8aaac;
+        border-right: 15px solid #c7cbce;
+        border-left: 15px solid #c7cbce;
+        border-bottom: 20px solid #d0d5d8;
+    }
+
+    #calculator-body {
+        padding: 0 20px 20px;
+    }
+
+    #input-screen p {
+        font-size: 3.3rem;
+    }
+    
+    #answer-screen p {
+        font-size: 4.3rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 3.3rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 3.5rem;
+    }
+
+    button#del, button#ac {
+        font-size: 2.5rem;
+    }
+
+    #brand-text h1, #back-heading h1 {
+        font-size: 4.1rem;
+    }
+
+    #brand-text h2 {
+        font-size: 2rem; 
+    }
+
+    #back-heading p {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 50%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 110%;
+    }
+
+    .info-body {
+        gap: 15px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 1.5rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 4px;
+    }
+
+    .footer p {
+        font-size: 1.5rem;
+    }
+} 
+
+@media (min-width: 530px) and (max-width: 540px) and (min-height: 710px){
+    main {
+        width: 100vw;
+        padding: 30px 30px 20px;
+    }
+
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 95%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 10px solid #a8aaac;
+        border-right: 15px solid #c7cbce;
+        border-left: 15px solid #c7cbce;
+        border-bottom: 20px solid #d0d5d8;
+    }
+
+    #calculator-body {
+        padding: 0 20px 20px;
+    }
+
+    #input-screen p {
+        font-size: 2rem;
+    }
+    
+    #answer-screen p {
+        font-size: 2.6rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 1.8rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 2.5rem;
+    }
+
+    button#del, button#ac {
+        font-size: 1.7rem;
+    }
+
+    #brand-text h1, #back-heading h1 {
+        font-size: 2.5rem;
+    }
+
+    #brand-text h2 {
+        font-size: 1.3rem; 
+    }
+
+    #back-heading p {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 50%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 110%;
+    }
+
+    .info-body {
+        gap: 5px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 1rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 3px;
+    }
+
+    .footer p {
+        font-size: 1.2rem;
+    }
+} 
+
+@media (min-width: 910px) and (max-width: 912px) and (min-height: 1350px){
+    main {
+        width: 100vw;
+        padding: 30px 30px 20px;
+    }
+
+    #calc-flipper {
+        max-width: none;
+        min-width:fit-content;
+        height: 95%;
+        width: 100%;
+    }
+
+    section#screen {
+        border-top: 10px solid #a8aaac;
+        border-right: 15px solid #c7cbce;
+        border-left: 15px solid #c7cbce;
+        border-bottom: 20px solid #d0d5d8;
+    }
+
+    #calculator-body {
+        padding: 0 20px 20px;
+    }
+
+    #input-screen p {
+        font-size: 4rem;
+    }
+    
+    #answer-screen p {
+        font-size: 5.5rem;
+    }
+
+    #answer-screen .exponent {
+        font-size: 4.2rem;
+    }
+
+    #number-buttons button, #operators button {
+        font-size: 5rem;
+    }
+
+    button#del, button#ac {
+        font-size: 3.5rem;
+    }
+
+    #operators #add {
+        height: 205%;
+    }
+
+    #brand-text h1, #back-heading h1 {
+        font-size: 5rem;
+    }
+
+    #brand-text h2 {
+        font-size: 2.5rem; 
+    }
+
+    #back-heading p {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .clickable img, .clickable-back img {
+        width: 50%;
+    }
+
+    .clickable:hover, .clickable-back:hover {
+        background-size: 110%;
+    }
+
+    .info-body {
+        gap: 10px;
+    }
+
+    .info-body h3, .info-body li {
+        font-size: 2rem;
+    }
+
+    .button-key {
+        width: 40%;
+    }
+
+    .info-body li {
+        width: 90%;
+        margin-bottom: 3px;
+    }
+
+    .footer p {
+        font-size: 2.2rem;
+    }
+} 
