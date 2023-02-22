@@ -277,14 +277,14 @@ const operatorButton = document.querySelectorAll("[data-operate]");
 let step = 1;
 function operatesInputs(event) {
 // Adds pressing animation   
-    setTimeout(() => {
-        event.button.classList.toggle("pressed");
-    },100);
-        event.button.classList.toggle("pressed");
+    // setTimeout(() => {
+    //     event.button.classList.toggle("pressed");
+    // },100);
+    //     event.button.classList.toggle("pressed");
 
-     if (cursor.hasAttribute("class")) {
-        cursor.classList.remove("limit");
-    }
+    //  if (cursor.hasAttribute("class")) {
+    //     cursor.classList.remove("limit");
+    // }
 
 // Limits the screen input characters
     let continueOperation = false;
@@ -293,18 +293,28 @@ function operatesInputs(event) {
         let screenChar = [...inputScreen.textContent];
         cursor.classList.add("limit");
 
+        // checks the screen if there is current operation, continue if true
         screenChar.forEach(char => {
-            if (char === "+" || char === "−" || char === "×" || char === "÷" ) {
+            let operators = ["+", "−", "×", "÷"  ]
+            if (operators.includes(char)) {
+                continueOperation = true;
+            } else if (event.operation === "equals") {
+                continueOperation = true;
+            } else if (answerExponent.textContent.length > 0) {
+            // Fallback if input screen does not contain operator
+            //  but answer screen has exponent continue operation to be
+            //  stopped at next step for AC break
                 continueOperation = true;
             }
         });
-
+        // console.log(event.operation);
+        // console.log(continueOperation);
         if (continueOperation === false) {
             return;
         }
     }
 
-    let operation = event.operation;
+let operation = event.operation;
 
 // Does not work if last answer was exponent, large number 
     if (answerExponent.textContent.length > 0) {
