@@ -559,7 +559,7 @@ body::before {
     .footer p {
         font-size: 0.8rem;
     }
-
+}
 
 @media (min-width: 370px) and (max-width: 380px) and (min-height: 660px) {
     main {
