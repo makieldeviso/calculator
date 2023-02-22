@@ -9,12 +9,13 @@
 main {
     width: 80vw;
     margin: auto;
+    height: 100vh;
+    padding: 30px;
 
 }
 
-main {
-    height: 100vh;
-    padding: 30px;
+.section-header {
+    display: none;
 }
 
 #calc-flipper {
