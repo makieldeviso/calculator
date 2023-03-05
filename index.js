@@ -277,14 +277,14 @@ const operatorButton = document.querySelectorAll("[data-operate]");
 let step = 1;
 function operatesInputs(event) {
 // Adds pressing animation   
-    // setTimeout(() => {
-    //     event.button.classList.toggle("pressed");
-    // },100);
-    //     event.button.classList.toggle("pressed");
+    setTimeout(() => {
+        event.button.classList.toggle("pressed");
+    },100);
+        event.button.classList.toggle("pressed");
 
-    //  if (cursor.hasAttribute("class")) {
-    //     cursor.classList.remove("limit");
-    // }
+     if (cursor.hasAttribute("class")) {
+        cursor.classList.remove("limit");
+    }
 
 // Limits the screen input characters
     let continueOperation = false;
@@ -359,7 +359,7 @@ let operation = event.operation;
 
     } else {
     //when equals is pressed
-        if (chain === false) {
+        if (chain === false && lastOperation.length === 1) {
             currentOperation = lastOperation[0];
         } else {
             currentOperation = lastOperation[1];
