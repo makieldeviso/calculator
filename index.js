@@ -1,6 +1,6 @@
 let chain = false;
-const inputScreenLimit = 19;
-const answerScreenLimit = 12;
+let inputScreenLimit = 20;
+const answerScreenLimit = 15;
 let firstInput; //stores first input
 let secondInput; // stores the second input
 let answer; // stores answer to the operation
@@ -12,6 +12,31 @@ let keylog = ["shiftUp"]; // Logs keypress, used for detecting simultaneous keyp
 
 const wholeCalc = document.querySelector("#whole-calc");
 
+
+const initialLoadDisplay = (function () {
+
+    // Render footer year
+    const footerYear = document.querySelector('#footer-year');
+    footerYear.textContent = (new Date()).getFullYear();
+
+    // Calculate allowable number of inputs
+    const adjustScreenFont = function () {
+        allClear();
+        const inputContainer = document.querySelector('#screen .input-screen-container');
+        const numberText = document.querySelector('#input-screen p');
+        const {width, height} = inputContainer.getBoundingClientRect();
+
+        const idealLength = Math.floor(width / (height / 1.8) - 2);
+        inputScreenLimit = idealLength;
+        numberText.style.maxWidth = `${idealLength}ch`;
+    }
+
+    window.addEventListener('load', adjustScreenFont);
+    window.addEventListener('resize', adjustScreenFont);
+
+})();
+
+
 // Number Buttons ------
 const numberButtons = document.querySelectorAll("#number-buttons button");
     numberButtons.forEach(button => {
@@ -21,6 +46,8 @@ const numberButtons = document.querySelectorAll("#number-buttons button");
     document.addEventListener("keydown", typesNumberButton);
     document.addEventListener("keyup", typesNumberButton);
 
+    console.log(numberButtons)
+
     function typesNumberClick() {
             let click = this.value;
             typesNumber(click);
@@ -28,11 +55,11 @@ const numberButtons = document.querySelectorAll("#number-buttons button");
 
     function typesNumberButton(event) {
             let keypress = event.key;
-            const allowedNumPress = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
-
+            const allowedNumPress = /^[0-9\.]*$/;
+            
         // Fires Negative Sign
         // Ensures that subtract operation only fires when shift is held down
-             if (keypress === "Shift" || keypress === "-") {
+             if (keypress === "Shift" || keypress === "-" || keypress === "_") {
             // shift press
                 if (event.type === "keydown" && keypress === "Shift") {
                     keylog.push("shiftDown");
@@ -47,12 +74,16 @@ const numberButtons = document.querySelectorAll("#number-buttons button");
             // Fires the negative sign while shift is pressed
                 if (event.type === "keydown" && keypress === "-" && keylog[0] === "shiftDown") {
                         typesNumber("-");
-                    }
+                }
+                if (event.type === "keydown" && keypress === "_" && keylog[0] === "shiftDown") {
+                    typesNumber("-");
+                }
             }
 
-            if (allowedNumPress.includes(keypress) && event.type === "keydown") {
+            if (allowedNumPress.test(keypress) && event.type === "keydown") {
                 typesNumber(keypress);
             }
+
     }       
 
 // AC ----------
@@ -88,6 +119,7 @@ const answerScreen = document.querySelector("#answer-screen p");
 const answerExponent = document.querySelector("#answer-screen .exponent");
 
 function typesNumber(event) {
+    
 // Adds pressing animation
     let thisButton = document.querySelector(`[value='${event}']`);   
     setTimeout(() => {
@@ -101,11 +133,11 @@ function typesNumber(event) {
      
 // Does not work if last answer was exponent, large number 
     if (answerExponent.textContent.length > 0) {
-        inputScreen.textContent = "Memory Full [AC]: Cancel"
+        inputScreen.textContent = "Memory Full [AC]: Cancel";
         return;
     } else if (answer != undefined) {
         if (answer.toString().length > inputScreenLimit) {
-            inputScreen.textContent = "Memory Full [AC]: Cancel"
+            inputScreen.textContent = "Memory Full [AC]: Cancel";
             return; 
         }
     }
@@ -199,8 +231,7 @@ const operatorButton = document.querySelectorAll("[data-operate]");
         this.textContent = textContent;
         operatorsArr.push(this);
     } 
-
-    // I can code this by using the node[], but choose to keep this for readability and further features 
+ 
     const multiplyButton = document.querySelector("#multiply");
     const divideButton = document.querySelector("#divide");
     const addButton = document.querySelector("#add");
@@ -240,8 +271,8 @@ const operatorButton = document.querySelectorAll("[data-operate]");
 
         const allowedKeys = ["*", "/", "+", "=", "Enter"]; // Subtract has special set of events
 
-// Fires subtraction
-// Ensures that subtract operation only fires when shift is not held down
+        // Fires subtraction
+        // Ensures that subtract operation only fires when shift is not held down
         if (keypress === "Shift" || keypress === "-") {
         // shift press
             if (event.type === "keydown" && keypress === "Shift") {
@@ -260,7 +291,7 @@ const operatorButton = document.querySelectorAll("[data-operate]");
                 }
         }
         
-// Fires other operations
+        // Fires other operations
         if (allowedKeys.includes(keypress) && event.type === "keydown") {
             if (keypress === "*") {
                 operatesInputs(multiplyObj);    
@@ -674,7 +705,6 @@ function backSpace() {
         lastInput = parseFloat(inputScreen.textContent[inputScreen.textContent.length - 1]);
     }
 }
-
 
 const infoButton = document.querySelector(".info");
     infoButton.addEventListener("click", flipCalc);
